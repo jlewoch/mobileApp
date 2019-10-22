@@ -31,6 +31,7 @@ export class LoginScreen extends Component {
       <Section testID="loginComponent">
         <Input
           testID="loginEmailInput"
+          autoFocus
           placeholder="Email"
           icon="mail"
           value={values.email}
@@ -51,7 +52,7 @@ export class LoginScreen extends Component {
         <StyledText
           testID="loginForgot"
           type="footnote"
-          onPress={() => this.props.navigation.navigate('Forgot')}
+          onPress={() => this.props.navigation.navigate('ForgotPassword')}
           style={{
             color: colors.main,
             fontWeight: '600',
@@ -65,9 +66,7 @@ export class LoginScreen extends Component {
           onPress={this._signInAsync}
         />
         <Row style={{justifyContent: 'center'}}>
-          <StyledText type="footnote" style={styles.authOption}>
-            Don't have an Account?
-          </StyledText>
+          <StyledText type="footnote">Don't have an Account?</StyledText>
 
           <StyledText
             onPress={() => this.props.navigation.navigate('Signup')}

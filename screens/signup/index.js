@@ -40,7 +40,12 @@ export default class SignupScreen extends Component {
   };
   render() {
     const {errors, values} = this.state;
-    const canSubmit = this._submitValidation(values);
+    const cantSubmit =
+      checkEmail(values.email) ||
+      checkCity(values.city) ||
+      checkName(values.name) ||
+      checkPassword(values.password) ||
+      values.confirm !== values.password;
     return (
       <KeyboardAvoidingView
         testID="signupComponent"
@@ -122,15 +127,13 @@ export default class SignupScreen extends Component {
               }}
             />
 
-            <Button testID="signupBtn" disabled={canSubmit} label="Signup" />
+            <Button testID="signupBtn" disabled={cantSubmit} label="Signup" />
             <Row style={{justifyContent: 'center'}}>
-              <StyledText type="footnote" style={styles.authOption}>
-                Already have an Account?
-              </StyledText>
+              <StyledText type="footnote">Already have an Account?</StyledText>
               <StyledText
                 testID="signupLogin"
                 type="footnote"
-                onPress={() => this.props.navigation.navigate('Login')}
+                onPress={() => this.props.navigation.goBack()}
                 style={{
                   color: colors.main,
                   fontWeight: '600',
@@ -143,12 +146,7 @@ export default class SignupScreen extends Component {
       </KeyboardAvoidingView>
     );
   }
-  _submitValidation = ({name, email, city, password, confirm}) =>
-    checkEmail(email) ||
-    checkCity(city) ||
-    checkName(name) ||
-    checkPassword(password) ||
-    confirm !== password;
+
   _validate = (value, name) => {
     this.setState({errors: {...this.state.errors, [name]: value}});
   };
