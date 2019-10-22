@@ -13,3 +13,10 @@ export const checkProps = (component, expectedProps) => {
   );
   return propsError;
 };
+export const createForm = (state, props) => {
+  let form = new FormData();
+  Object.keys(state).forEach(
+    key => state[key] !== props[key] && form.append(key, state[key]),
+  );
+  return form;
+};
