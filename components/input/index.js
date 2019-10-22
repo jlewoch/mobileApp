@@ -1,18 +1,15 @@
 import React, {Component} from 'react';
-import propTypes from 'prop-types';
-import {View, TextInput} from 'react-native';
+import PropTypes from 'prop-types';
+import {View, TextInput, StyleSheet} from 'react-native';
 import ErrorText from '../errorText';
 import Icon, {SuccessError} from '../icon';
 import StyledText from '../styledText';
 import SecureEye from './SecureEye';
-import styles from './styles';
 import Row from '../row';
 import globalStyles from '../../globalStyles';
 import colors from '../../constants/colors';
+
 export class Input extends Component {
-  static propTypes = {
-    errormsg: propTypes.string,
-  };
   state = {
     secure: false,
   };
@@ -23,8 +20,6 @@ export class Input extends Component {
 
   // changes the visibility of text in secure input
   changeVisible = () => this.setState({secure: !this.state.secure});
-
-  // perform validation on blur
 
   render() {
     const {secure} = this.state;
@@ -39,15 +34,13 @@ export class Input extends Component {
       onBlur,
       error,
       feedback,
+      keyboardType,
     } = this.props;
     return (
       <View
         testID="inputComponent"
         style={{
           marginVertical: 10,
-          borderBottomColor: colors.subText,
-          borderBottomWidth: 1,
-          borderStyle: 'solid',
         }}>
         {/* show label if one is inputed */}
         {label && (
@@ -59,6 +52,9 @@ export class Input extends Component {
         <Row
           style={{
             alignItems: 'center',
+            borderBottomColor: colors.subText,
+            borderBottomWidth: 1,
+            borderStyle: 'solid',
           }}>
           {/* show icon if icon is passed into props */}
           {icon && (
@@ -70,6 +66,7 @@ export class Input extends Component {
             />
           )}
           <TextInput
+            keyboardType={keyboardType}
             testID="inputTextInput"
             autoFocus={autoFocus}
             style={[{flex: 1}, globalStyles.body]}
@@ -110,15 +107,16 @@ Input.defaultProps = {
   placeholder: 'EnterText',
 };
 Input.propTypes = {
-  errormsg: propTypes.string,
-  placeholder: propTypes.string,
-  label: propTypes.string,
-  autoFocus: propTypes.bool,
-  icon: propTypes.string,
-  onChange: propTypes.func,
-  value: propTypes.string,
-  onBlur: propTypes.func,
-  error: propTypes.bool,
-  feedback: propTypes.bool,
+  errormsg: PropTypes.string,
+  placeholder: PropTypes.string,
+  label: PropTypes.string,
+  autoFocus: PropTypes.bool,
+  icon: PropTypes.string,
+  onChange: PropTypes.func,
+  value: PropTypes.string,
+  onBlur: PropTypes.func,
+  error: PropTypes.bool,
+  feedback: PropTypes.bool,
 };
 export default Input;
+const styles = StyleSheet.create({});

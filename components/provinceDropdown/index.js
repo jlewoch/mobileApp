@@ -1,10 +1,10 @@
 import React from 'react';
-import propTypes from 'prop-types';
-import Dropdown from './Dropdown';
-
+import PropTypes from 'prop-types';
+import Dropdown from '../dropdown';
 const ProvinceDropdown = ({style, selected, onChange}) => {
   return (
     <Dropdown
+      test
       label="Province"
       style={style}
       options={[
@@ -28,8 +28,19 @@ const ProvinceDropdown = ({style, selected, onChange}) => {
   );
 };
 ProvinceDropdown.propTypes = {
-  style: propTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  selected: propTypes.string,
-  onChange: propTypes.func,
+  style: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  selected: PropTypes.oneOf([
+    'Ontario',
+    'Quebec',
+    'Nova Scotia',
+    'New Brunswick',
+    'Manitoba',
+    'British Columbia',
+    'Prince Edward Island',
+    'Saskatchewan',
+    'Alberta',
+    'Newfoundland and Labrador',
+  ]),
+  onChange: PropTypes.func,
 };
 export default ProvinceDropdown;

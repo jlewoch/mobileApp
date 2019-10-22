@@ -45,7 +45,8 @@
     },
     "preset": "react-native",
     "setupFilesAfterEnv": [
-      "<rootDir>setup-tests.js"
+      "<rootDir>setup-tests.js",
+      "./node_modules/react-native-gesture-handler/jestSetup.js"
     ],
     "moduleFileExtensions": [
       "js",
@@ -54,6 +55,9 @@
       "ts",
       "tsx",
       "node"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native|react-native-gesture-handler|react-native-vector-icons)/)"
     ]
   }
 }

@@ -1,8 +1,5 @@
 import React from 'react';
-import {shallow} from 'enzyme';
-jest.mock('Dimensions');
 import Header from './index';
-import {findByTestIdAttr, checkProps} from '../../utils';
 const setup = (props = {}) => {
   const component = shallow(<Header {...props} />);
   return component;

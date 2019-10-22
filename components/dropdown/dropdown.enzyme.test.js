@@ -1,7 +1,5 @@
 import React from 'react';
-import {shallow} from 'enzyme';
 import Dropdown from './index';
-import {findByTestIdAttr, checkProps} from '../../utils';
 const setup = (props = {}) => {
   const component = shallow(<Dropdown {...props} />);
   return component;

@@ -8,8 +8,14 @@ import Input from '../../components/input';
 import Button from '../../components/button';
 import StyledText from '../../components/styledText';
 import Row from '../../components/row';
-import {checkLength, isEmail} from '../../utils/validation';
+import {
+  checkLength,
+  isEmail,
+  checkEmail,
+  checkPassword,
+} from '../../utils/validation';
 import colors from '../../constants/colors';
+import {TouchableHighlight} from 'react-native-gesture-handler';
 
 export class LoginScreen extends Component {
   static navigationOptions = {
@@ -32,7 +38,7 @@ export class LoginScreen extends Component {
           errormsg="Please enter a valid email address"
           error={errors.email}
           onChange={e => this._onChange(e, 'email')}
-          onBlur={e => this._onBlur(!isEmail(e), 'email')}
+          onBlur={e => this._onBlur(checkEmail(values.email), 'email')}
         />
         <Input
           testID="loginPasswordInput"
@@ -46,12 +52,15 @@ export class LoginScreen extends Component {
           testID="loginForgot"
           type="footnote"
           onPress={() => this.props.navigation.navigate('Forgot')}
-          style={styles.link}>
+          style={{
+            color: colors.main,
+            fontWeight: '600',
+          }}>
           Forgot Password
         </StyledText>
         <Button
           testID="loginBtn"
-          disabled={!isEmail(values.email) || checkLength(values.password, 1)}
+          disabled={checkEmail(values.email) || checkPassword(values.password)}
           label="Login"
           onPress={this._signInAsync}
         />
@@ -59,10 +68,11 @@ export class LoginScreen extends Component {
           <StyledText type="footnote" style={styles.authOption}>
             Don't have an Account?
           </StyledText>
+
           <StyledText
+            onPress={() => this.props.navigation.navigate('Signup')}
             testID="loginSignup"
             type="footnote"
-            onPress={() => this.props.navigation.navigate('Signup')}
             style={{
               color: colors.main,
               fontWeight: '600',
