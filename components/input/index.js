@@ -14,8 +14,8 @@ export class Input extends Component {
     secure: false,
   };
   componentDidMount() {
-    // allows secure eye icon to show if secure pass in props
-    this.setState({secure: this.props.secure});
+    // if secure is passed as true this will make sure that the field maks value
+    this.props.secure && this.setState({secure: this.props.secure});
   }
 
   // changes the visibility of text in secure input
