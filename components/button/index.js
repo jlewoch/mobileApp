@@ -1,8 +1,8 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import styles from './styles';
-import Colors from '../../constants/Colors';
-import {TouchableOpacity} from 'react-native';
+import colors from '../../constants/colors';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import StyledText from '../styledText';
 
 const Button = ({label, onPress, disabled, style}) => {
@@ -12,10 +12,20 @@ const Button = ({label, onPress, disabled, style}) => {
         testID="btnComponent"
         disabled={disabled}
         onPress={onPress}
-        style={[styles.button, style, disabled ? styles.disabled : {}]}>
+        style={[
+          {
+            padding: 10,
+            backgroundColor: colors.accentOrange,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginVertical: 20,
+          },
+          style,
+        ]}>
         <StyledText
           testID="btnLabel"
-          style={[styles.label, {color: Colors.white}]}>
+          type="title3"
+          style={{fontWeight: 'bold', color: colors.white}}>
           {label}
         </StyledText>
       </TouchableOpacity>

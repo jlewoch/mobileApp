@@ -5,6 +5,7 @@ import colors from '../../constants/colors';
 const ErrorText = ({children}) => {
   return (
     <StyledText
+      type="subhead"
       testID="errorTextComponent"
       style={{paddingTop: 3, color: colors.accentRed}}>
       {children}

@@ -2,7 +2,6 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import {LoginScreen} from './index';
 import {findByTestIdAttr} from '../../utils';
-import renderer from 'react-test-renderer';
 const setup = (props = {}) => {
   const component = shallow(<LoginScreen {...props} />);
   return component;
@@ -48,11 +47,17 @@ describe('>>> Login --> Inputs', () => {
   beforeEach(() => {
     wrapper = setup();
   });
-  it('Should change state when value changes on email input', () => {
+  it('Should change state when a value is typed in to each field', () => {
+    // email
     const email = findByTestIdAttr(wrapper, 'loginEmailInput');
     expect(wrapper.state('values').email).toEqual('');
     email.simulate('change', 'j');
     expect(wrapper.state('values').email).toEqual('j');
+    // password
+    const password = findByTestIdAttr(wrapper, 'loginPasswordInput');
+    expect(wrapper.state('values').password).toEqual('');
+    password.simulate('change', 'j');
+    expect(wrapper.state('values').password).toEqual('j');
   });
   it('Should set email error state to true when an invalid email address is typed in', () => {
     const email = findByTestIdAttr(wrapper, 'loginEmailInput');
@@ -60,11 +65,5 @@ describe('>>> Login --> Inputs', () => {
     expect(wrapper.state('errors').email).toEqual(true);
     email.simulate('blur', 'Test@test.com');
     expect(wrapper.state('errors').email).toEqual(false);
-  });
-  it('Should change state when value changes on password input', () => {
-    const password = findByTestIdAttr(wrapper, 'loginPasswordInput');
-    expect(wrapper.state('values').password).toEqual('');
-    password.simulate('change', 'j');
-    expect(wrapper.state('values').password).toEqual('j');
   });
 });

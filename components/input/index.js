@@ -6,6 +6,9 @@ import Icon, {SuccessError} from '../icon';
 import StyledText from '../styledText';
 import SecureEye from './SecureEye';
 import styles from './styles';
+import Row from '../row';
+import globalStyles from '../../globalStyles';
+import colors from '../../constants/colors';
 export class Input extends Component {
   static propTypes = {
     errormsg: propTypes.string,
@@ -38,7 +41,14 @@ export class Input extends Component {
       feedback,
     } = this.props;
     return (
-      <View testID="inputComponent" style={{marginVertical: 10}}>
+      <View
+        testID="inputComponent"
+        style={{
+          marginVertical: 10,
+          borderBottomColor: colors.subText,
+          borderBottomWidth: 1,
+          borderStyle: 'solid',
+        }}>
         {/* show label if one is inputed */}
         {label && (
           <StyledText testID="inputLabel" style={styles.label}>
@@ -46,20 +56,23 @@ export class Input extends Component {
           </StyledText>
         )}
 
-        <View style={[styles.inputContainer]}>
+        <Row
+          style={{
+            alignItems: 'center',
+          }}>
           {/* show icon if icon is passed into props */}
           {icon && (
             <Icon
               testID="inputIcon"
               type="Entypo"
               name={icon}
-              style={{marginRight: 15}}
+              style={{marginRight: 10}}
             />
           )}
           <TextInput
             testID="inputTextInput"
             autoFocus={autoFocus}
-            style={[styles.container, styles.text]}
+            style={[{flex: 1}, globalStyles.body]}
             placeholder={placeholder}
             onChangeText={onChange}
             value={value}
@@ -83,7 +96,7 @@ export class Input extends Component {
               onPress={this.changeVisible}
             />
           )}
-        </View>
+        </Row>
 
         {/* show the error message passed when there is an error*/}
         {error && <ErrorText testID="inputErrMsg">{errormsg}</ErrorText>}

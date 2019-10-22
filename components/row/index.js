@@ -3,9 +3,7 @@ import {View} from 'react-native';
 
 const Row = ({style, children}) => {
   return (
-    <View
-      testID="rowComponent"
-      style={[{flexDirection: 'row', padding: 15}, style]}>
+    <View testID="rowComponent" style={[{flexDirection: 'row'}, style]}>
       {children}
     </View>
   );

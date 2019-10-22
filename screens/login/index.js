@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Section from '../../components/section';
 import Header from '../../components/header';
 import Input from '../../components/input';
@@ -9,6 +9,7 @@ import Button from '../../components/button';
 import StyledText from '../../components/styledText';
 import Row from '../../components/row';
 import {checkLength, isEmail} from '../../utils/validation';
+import colors from '../../constants/colors';
 
 export class LoginScreen extends Component {
   static navigationOptions = {
@@ -21,7 +22,7 @@ export class LoginScreen extends Component {
   render() {
     const {values, errors} = this.state;
     return (
-      <Section testID="loginComponent" style={{flex: 1}}>
+      <Section testID="loginComponent">
         <Input
           testID="loginEmailInput"
           placeholder="Email"
@@ -40,9 +41,10 @@ export class LoginScreen extends Component {
           value={values.password}
           secure
           onChange={e => this._onChange(e, 'password')}
-        />{' '}
+        />
         <StyledText
           testID="loginForgot"
+          type="footnote"
           onPress={() => this.props.navigation.navigate('Forgot')}
           style={styles.link}>
           Forgot Password
@@ -50,18 +52,22 @@ export class LoginScreen extends Component {
         <Button
           testID="loginBtn"
           disabled={!isEmail(values.email) || checkLength(values.password, 1)}
-          label="Sign in!"
+          label="Login"
           onPress={this._signInAsync}
         />
-        <Row>
-          <StyledText style={styles.authOption}>
+        <Row style={{justifyContent: 'center'}}>
+          <StyledText type="footnote" style={styles.authOption}>
             Don't have an Account?
           </StyledText>
           <StyledText
             testID="loginSignup"
+            type="footnote"
             onPress={() => this.props.navigation.navigate('Signup')}
-            style={styles.link}>
-            Sign up
+            style={{
+              color: colors.main,
+              fontWeight: '600',
+            }}>
+            {' Sign Up'}
           </StyledText>
         </Row>
       </Section>
