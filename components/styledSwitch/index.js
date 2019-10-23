@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// components
 import {Switch} from 'react-native';
 import Row from '../row';
 import StyledText from '../styledText';

@@ -9,7 +9,8 @@ describe('>>> StyledSwitch --> Shallow Renders', () => {
   beforeEach(() => {
     const passedProps = {
       label: 'Test title',
-      onPress: () => {},
+      onChange: () => {},
+      value: false,
     };
     wrapper = setup(passedProps);
   });
