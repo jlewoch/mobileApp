@@ -8,7 +8,7 @@ import {TouchableHighlight} from 'react-native-gesture-handler';
 
 const Card = ({image, title, desc, details, onPress}) => {
   return (
-    <TouchableHighlight testID="cardComponent">
+    <TouchableHighlight onPress={onPress} testID="cardComponent">
       <Row>
         {image && <StyledImage testID="cardImg" circle uri={image} />}
         <View style={{flex: 1}}>
@@ -25,5 +25,6 @@ Card.prototype = {
   title: PropTypes.string,
   desc: PropTypes.string,
   details: PropTypes.string,
+  onPress: PropTypes.func,
 };
 export default Card;

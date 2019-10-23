@@ -9,6 +9,7 @@ describe('>>> List --> Shallow Renders', () => {
   let wrapper;
   beforeEach(() => {
     const passedProps = {
+      add: () => {},
       label: 'Test title',
       items: [
         {title: 'Test title', sub: 'Test Sub'},
@@ -43,6 +44,14 @@ describe('>>> List --> Shallow Renders', () => {
   it('Renders items in a card specified or will just render the text', () => {
     expect(findByTestIdAttr(wrapper, 'listItem')).toHaveLength(2);
   });
+  it('Should have an add button when add is passed', () => {
+    expect(findByTestIdAttr(wrapper, 'listAddBtn')).toHaveLength(1);
+  });
+  it('should not render an add button id add is undefined', () => {
+    expect(
+      findByTestIdAttr(setup({card: () => {}, items: []}), 'listAddBtn'),
+    ).toHaveLength(0);
+  });
 });
 describe('>>> List --> Checking PropTypes', () => {
   it('Should not throw a warning', () => {
@@ -58,6 +67,7 @@ describe('>>> List --> Checking PropTypes', () => {
           <Text>{sub}</Text>
         </View>
       ),
+      add: () => {},
     };
     const propsError = checkProps(List, expectedProps);
     expect(propsError).toBeUndefined();

@@ -13,6 +13,7 @@ describe('>>> Card --> Shallow Renders', () => {
       title: 'Test Title',
       desc: 'Test Desc',
       details: 'Test details',
+      onPress: () => {},
     };
     wrapper = setup(passedProps);
   });
@@ -42,6 +43,7 @@ describe('>>> Card --> Checking PropTypes', () => {
       title: 'Test Title',
       desc: 'Test Desc',
       details: 'Test details',
+      onPress: () => {},
     };
     const propsError = checkProps(Card, expectedProps);
     expect(propsError).toBeUndefined();
