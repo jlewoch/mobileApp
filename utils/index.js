@@ -1,6 +1,5 @@
 import checkPropTypes from 'check-prop-types';
 import {AsyncStorage} from 'react-native';
-
 export const findByTestIdAttr = (component, attr) => {
   const wrapper = component.findWhere(node => node.prop('testID') === attr);
   return wrapper;

@@ -9,7 +9,8 @@ describe('>>> Card --> Shallow Renders', () => {
   let wrapper;
   beforeEach(() => {
     const passedProps = {
-      image: 'Test url',
+      image: true,
+      imageSrc: 'Test url',
       title: 'Test Title',
       desc: 'Test Desc',
       details: 'Test details',
@@ -39,7 +40,8 @@ describe('>>> Card --> Shallow Renders', () => {
 describe('>>> Card --> Checking PropTypes', () => {
   it('Should not throw a warning', () => {
     const expectedProps = {
-      image: 'Test url',
+      image: true,
+      imageSrc: 'Test url',
       title: 'Test Title',
       desc: 'Test Desc',
       details: 'Test details',

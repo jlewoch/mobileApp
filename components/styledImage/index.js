@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 // components
-import {Image, StyleSheet} from 'react-native';
-import {TouchableHighlight} from 'react-native-gesture-handler';
+import {Image, StyleSheet, TouchableHighlight} from 'react-native';
 // constants
 import {IMAGE_URI_ROOT} from '../../constants/api';
 

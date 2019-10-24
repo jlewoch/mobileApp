@@ -5,23 +5,46 @@ import Row from '../row';
 import {StyledImage} from '../styledImage';
 import StyledText from '../styledText';
 import {TouchableHighlight} from 'react-native-gesture-handler';
+import colors from '../../constants/colors';
 
-const Card = ({image, title, desc, details, onPress}) => {
+const Card = ({image, imageSrc, title, desc, details, onPress}) => {
   return (
-    <TouchableHighlight onPress={onPress} testID="cardComponent">
+    <TouchableHighlight
+      onPress={onPress}
+      testID="cardComponent"
+      style={{
+        padding: 10,
+        borderColor: colors.subText,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderRadius: 8,
+        marginTop: 15,
+      }}>
       <Row>
-        {image && <StyledImage testID="cardImg" circle uri={image} />}
+        {image && (
+          <StyledImage
+            testID="cardImg"
+            circle
+            uri={imageSrc}
+            containerStyle={{marginRight: 15, height: 75}}
+          />
+        )}
         <View style={{flex: 1}}>
-          <StyledText testID="cardTitle">{title}</StyledText>
+          <StyledText type="title3" testID="cardTitle">
+            {title}
+          </StyledText>
           <StyledText testID="cardDesc">{desc}</StyledText>
-          <StyledText testID="cardDetails">{details}</StyledText>
+          <StyledText type="callout" testID="cardDetails">
+            {details}
+          </StyledText>
         </View>
       </Row>
     </TouchableHighlight>
   );
 };
 Card.prototype = {
-  image: PropTypes.string,
+  image: PropTypes.bool,
+  imageSrc: PropTypes.string,
   title: PropTypes.string,
   desc: PropTypes.string,
   details: PropTypes.string,

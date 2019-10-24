@@ -8,14 +8,8 @@ import Input from '../../components/input';
 import Button from '../../components/button';
 import StyledText from '../../components/styledText';
 import Row from '../../components/row';
-import {
-  checkLength,
-  isEmail,
-  checkEmail,
-  checkPassword,
-} from '../../utils/validation';
+import {checkEmail, checkPassword} from '../../utils/validation';
 import colors from '../../constants/colors';
-import {TouchableHighlight} from 'react-native-gesture-handler';
 
 export class LoginScreen extends Component {
   static navigationOptions = {
@@ -69,7 +63,7 @@ export class LoginScreen extends Component {
           <StyledText type="footnote">Don't have an Account?</StyledText>
 
           <StyledText
-            onPress={() => this.props.navigation.navigate('Signup')}
+            onPress={this._signInAsync}
             testID="loginSignup"
             type="footnote"
             style={{

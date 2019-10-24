@@ -2,6 +2,7 @@ import 'react-native';
 import 'jest-enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, {shallow, render, mount} from 'enzyme';
+import renderer from 'react-test-renderer';
 import {findByTestIdAttr, checkProps} from './utils';
 // Make Enzyme functions available in all test files without importing
 global.shallow = shallow;
@@ -9,6 +10,7 @@ global.render = render;
 global.mount = mount;
 global.checkProps = checkProps;
 global.findByTestIdAttr = findByTestIdAttr;
+global.renderer = renderer;
 /**
  * Set up DOM in node.js environment for Enzyme to mount to
  */

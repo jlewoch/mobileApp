@@ -1,7 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import colors from '../../constants/colors';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native';
 import StyledText from '../styledText';
 
 const Button = ({label, onPress, disabled, style}) => {

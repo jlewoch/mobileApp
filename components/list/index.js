@@ -7,16 +7,13 @@ import Icon from '../icon';
 
 const List = ({label, items, card, add}) => {
   return (
-    items &&
-    card && (
-      <View testID="listComponentWrapper">
-        <Row style={{justifyContent: 'space-between'}}>
-          <StyledText testID="listLabel">{label}</StyledText>
-          {add && <Icon onPress={add} testID="listAddBtn" name="pluscircleo" />}
-        </Row>
-        <View testID="listComponent">{items.map(card)}</View>
-      </View>
-    )
+    <View testID="listComponentWrapper">
+      <Row style={{justifyContent: 'space-between'}}>
+        <StyledText testID="listLabel">{label}</StyledText>
+        {add && <Icon onPress={add} testID="listAddBtn" name="pluscircleo" />}
+      </Row>
+      <View testID="listComponent">{items && card && items.map(card)}</View>
+    </View>
   );
 };
 List.propTypes = {

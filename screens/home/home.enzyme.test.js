@@ -11,22 +11,33 @@ describe('>>> Home --> Component Renders', () => {
     const passedProps = {
       events: [
         {
+          _id: 'TestId',
           image: 'Test url',
           date: 'Test Title',
           type: 'Test Desc',
           time: 'Test details',
-        },
-        {
-          image: 'Test url',
-          date: 'Test Title',
-          type: 'Test Desc',
-          time: 'Test details',
-        },
-        {
-          image: 'Test url',
-          date: 'Test Title',
-          type: 'Test Desc',
-          time: 'Test details',
+          pets: [
+            {
+              _id: 'Test',
+              owner: 'Test',
+              img: 'Test',
+              breed: 'Test',
+              age: 2,
+              play_child: true,
+              play_dog: true,
+              play_cat: true,
+              around_child: true,
+              around_dog: true,
+              around_cat: true,
+              microchip: true,
+              house_trained: true,
+              name: 'Test',
+              size: 'Test',
+              notes: 'Test',
+              medication: 'Test',
+              vet_info: 'Test',
+            },
+          ],
         },
       ],
     };
@@ -44,10 +55,33 @@ describe('>>> Home --> Checking PropTypes', () => {
     const expectedProps = {
       events: [
         {
+          _id: 'TestId',
           image: 'Test url',
           date: 'Test Title',
           type: 'Test Desc',
           time: 'Test details',
+          pets: [
+            {
+              _id: 'Test',
+              owner: 'Test',
+              img: 'Test',
+              breed: 'Test',
+              age: 2,
+              play_child: true,
+              play_dog: true,
+              play_cat: true,
+              around_child: true,
+              around_dog: true,
+              around_cat: true,
+              microchip: true,
+              house_trained: true,
+              name: 'Test',
+              size: 'Test',
+              notes: 'Test',
+              medication: 'Test',
+              vet_info: 'Test',
+            },
+          ],
         },
       ],
     };
