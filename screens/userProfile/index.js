@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {Dimensions, KeyboardAvoidingView} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Section from '../../components/section';
@@ -9,7 +9,12 @@ import Button from '../../components/button';
 import Input from '../../components/input';
 import List from '../../components/list';
 import {StyledImage} from '../../components/styledImage';
-
+import {checkName, checkCity, checkEmail} from '../../utils/validation';
+import {
+  checkImagePickerPermission,
+  getPhotoAsync,
+} from '../../utils/permissions';
+const {height, width} = Dimensions.get('window');
 export class UserProfileScreen extends Component {
   state = {
     errors: {name: null, email: null, city: null},
@@ -31,97 +36,117 @@ export class UserProfileScreen extends Component {
   render() {
     const {values, errors} = this.state;
     return (
-      <ScrollView testID="userProfileScreen">
-        <StyledImage
-          testID="userProfileImage"
-          uri={values.image}
-          onPress={() => {}}
-        />
-        <Section>
-          <Input
-            testID="userProfileName"
-            feedback
-            autoFocus
-            placeholder="Name"
-            icon="user"
-            value={values.name}
-            error={errors.name}
-            errormsg="Please enter your name"
-            onChange={e => {
-              this._onChange(e, 'name');
-            }}
-            onBlur={() => {
-              this._validate(checkName(values.name), 'name');
-            }}
+      <KeyboardAvoidingView
+        style={{flex: 1, backgroundColor: 'white'}}
+        behavior="padding"
+        enabled>
+        <ScrollView
+          testID="userProfileScreen"
+          style={{flex: 1}}
+          contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
+          <StyledImage
+            testID="userProfileImage"
+            style={{width, height: height / 3}}
+            uri={values.image}
+            onPress={this._selectPhotoAsync}
           />
-          <Input
-            testID="userProfileEmail"
-            feedback
-            placeholder="Email"
-            icon="mail"
-            value={values.email}
-            error={errors.email}
-            errormsg="Please enter a valid email address"
-            onChange={e => this._onChange(e.trim(), 'email')}
-            onBlur={() => {
-              this._validate(checkEmail(values.email), 'email');
-            }}
+          <Section>
+            <Input
+              testID="userProfileName"
+              feedback
+              placeholder="Name"
+              icon="user"
+              value={values.name}
+              error={errors.name}
+              errormsg="Please enter your name"
+              onChange={e => {
+                this._onChange(e, 'name');
+              }}
+              onBlur={() => {
+                this._validate(checkName(values.name), 'name');
+              }}
+            />
+            <Input
+              testID="userProfileEmail"
+              feedback
+              placeholder="Email"
+              icon="mail"
+              value={values.email}
+              error={errors.email}
+              errormsg="Please enter a valid email address"
+              onChange={e => this._onChange(e.trim(), 'email')}
+              onBlur={() => {
+                this._validate(checkEmail(values.email), 'email');
+              }}
+            />
+            <Input
+              testID="userProfileCity"
+              feedback
+              placeholder="City"
+              icon="address"
+              value={values.city}
+              error={errors.city}
+              errormsg="Please enter a city name"
+              onChange={e => this._onChange(e, 'city')}
+              onBlur={() => {
+                this._validate(checkCity(values.city), 'city');
+              }}
+            />
+            <Input
+              testID="userProfileStreet"
+              feedback
+              placeholder="Street Address"
+              icon="address"
+              value={values.street_address}
+              error={errors.street_address}
+              errormsg="Please enter a street address name"
+              onChange={e => this._onChange(e, 'street_address')}
+            />
+            <List
+              testID="userProfilePets"
+              label="Pets"
+              add={() => this.props.navigation.navigate('PetProfile')}
+              items={this.props.pets}
+              card={(pet, idx) => (
+                <Card
+                  key={idx}
+                  onPress={() =>
+                    this.props.navigation.navigate('PetProfile', {pet})
+                  }
+                  title={pet.name}
+                  desc={pet.breed}
+                  details={pet.age}
+                  image={pet.img}
+                />
+              )}
+            />
+          </Section>
+          <Button
+            disabled={
+              checkCity(values.city) ||
+              checkName(values.name) ||
+              checkEmail(values.email)
+            }
+            testID="userProfileSaveBtn"
+            label="Save"
+            onPress={this._saveAsync}
           />
-          <Input
-            testID="userProfileCity"
-            feedback
-            placeholder="City"
-            icon="address"
-            value={values.city}
-            error={errors.city}
-            errormsg="Please enter a city name"
-            onChange={e => this._onChange(e, 'city')}
-            onBlur={() => {
-              this._validate(checkCity(values.city), 'city');
-            }}
-          />
-          <Input
-            testID="userProfileStreet"
-            feedback
-            placeholder="Street Address"
-            icon="address"
-            value={values.street_address}
-            error={errors.street_address}
-            errormsg="Please enter a street address name"
-            onChange={e => this._onChange(e, 'street_address')}
-            onBlur={() => {
-              this._validate(
-                checkCity(values.street_address),
-                'street_address',
-              );
-            }}
-          />
-          <List
-            testID="userProfilePets"
-            add={() => this.props.navigation.navigate('PetProfile')}
-            items={this.props.pets}
-            card={(pet, idx) => (
-              <Card
-                key={idx}
-                onPress={() =>
-                  this.props.navigation.navigate('PetProfile', {pet})
-                }
-                title={pet.name}
-                desc={pet.breed}
-                details={pet.age}
-                image={pet.img}
-              />
-            )}
-          />
-        </Section>
-        <Button
-          testID="userProfileSaveBtn"
-          label="Save"
-          onPress={this._saveAsync}
-        />
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
+  _selectPhotoAsync = async () => {
+    try {
+      await checkImagePickerPermission();
+      const img = await getPhotoAsync();
+      this._onChange(img.uri, 'image');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  _setPhotoState = response => {
+    this.onChange(response.uri, 'image');
+  };
   _validate = (value, name) => {
     this.setState({errors: {...this.state.errors, [name]: value}});
   };

@@ -6,7 +6,12 @@ import colors from '../constants/colors';
 import LoginScreen from '../screens/login';
 import SignupScreen from '../screens/signup';
 import ForgotPasswordScreen from '../screens/forgot';
-// other screens
+// home screens
+import HomeScreen from '../screens/home';
+
+// profile screens
+import UserProfileScreen from '../screens/userProfile';
+import PetProfileScreen from '../screens/petProfile';
 
 const config = Platform.select({
   web: {headerMode: 'screen'},
@@ -35,4 +40,17 @@ export const AuthStack = createStackNavigator(
     ForgotPassword: ForgotPasswordScreen,
   },
   {...config, initialRouteName: 'Login'},
+);
+export const HomeStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+  },
+  {...config, initialRouteName: 'Home'},
+);
+export const ProfileStack = createStackNavigator(
+  {
+    UserProfile: UserProfileScreen,
+    PetProfile: PetProfileScreen,
+  },
+  {...config, initialRouteName: 'Home'},
 );

@@ -1,18 +1,24 @@
 import {PermissionsAndroid, Platform} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
-export const selectPhotoAsync = async () => {
-  try {
-    if (Platform.OS === 'android') {
-      const camera = await checkCameraPermissionAsync();
-      const storageRead = await checkStorageReadPermissionAsync();
-      const storageWrite = await checkStorageWritePermissionAsync();
-      if (!camera) await requestCameraPermissionAsync();
-      if (!storageRead) await requestStorageReadPermissionAsync();
-      if (!storageWrite) await requestStorageWritePermissionAsync();
-      ImagePicker.launchImageLibrary({}, res => console.log(res, 'hell'));
+const GRANTED = PermissionsAndroid.RESULTS.GRANTED;
+
+export const getPhotoAsync = () => {
+  return new Promise(function(resolve, reject) {
+    ImagePicker.showImagePicker({}, resolve);
+  });
+};
+export const checkImagePickerPermission = async fn => {
+  if (Platform.OS === 'android') {
+    let camera = await checkCameraPermissionAsync();
+    let storageWrite = await checkStorageWritePermissionAsync();
+    if (!camera) {
+      camera = await requestCameraPermissionAsync();
+      if (camera !== GRANTED) throw Error('Access not granted');
     }
-  } catch (error) {
-    console.log(error, 'here');
+    if (!storageWrite) {
+      storageWrite = await requestStorageWritePermissionAsync();
+      if (storageWrite !== GRANTED) throw Error('Access not granted');
+    }
   }
 };
 
@@ -26,17 +32,6 @@ const requestCameraPermissionAsync = async () => {
 const checkCameraPermissionAsync = () =>
   PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA);
 
-const requestStorageReadPermissionAsync = async () => {
-  const result = await PermissionsAndroid.request(
-    PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-  );
-  if (result !== PermissionsAndroid.RESULTS.GRANTED)
-    throw Error(`Permission selected was ${result}`);
-};
-const checkStorageReadPermissionAsync = () =>
-  PermissionsAndroid.check(
-    PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-  );
 const requestStorageWritePermissionAsync = async () => {
   const result = await PermissionsAndroid.request(
     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,

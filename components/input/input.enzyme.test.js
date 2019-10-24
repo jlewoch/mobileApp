@@ -133,6 +133,7 @@ describe('>>> Input --> Functions', () => {
 describe('>>> Input --> Checking PropTypes', () => {
   it('Should not throw a warning', () => {
     const expectedProps = {
+      multiline: true,
       errormsg: 'Test error',
       placeholder: 'Test placeholder',
       label: 'Test Label',

@@ -17,7 +17,7 @@ const Button = ({label, onPress, disabled, style}) => {
             backgroundColor: disabled ? colors.subText : colors.accentOrange,
             alignItems: 'center',
             justifyContent: 'center',
-            marginVertical: 20,
+            marginTop: 20,
           },
           style,
         ]}>

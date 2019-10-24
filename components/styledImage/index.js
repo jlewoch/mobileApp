@@ -6,33 +6,13 @@ import {Image, StyleSheet, TouchableHighlight} from 'react-native';
 // constants
 import {IMAGE_URI_ROOT} from '../../constants/api';
 
-export const StyledImage = ({
-  uri,
-  authorization,
-  onPress,
-  circle,
-  containerStyle,
-}) => {
+export const StyledImage = ({uri, authorization, onPress, circle, style}) => {
   return (
-    <TouchableHighlight
-      testID="imgWrapper"
-      onPress={onPress}
-      style={containerStyle}>
+    <TouchableHighlight testID="imgWrapper" onPress={onPress}>
       <Image
         testID="imgComponent"
-        source={
-          uri
-            ? {
-                uri: `${IMAGE_URI_ROOT}${uri}`,
-                method: 'POST',
-                headers: {
-                  authorization,
-                  Pragma: 'no-cache',
-                },
-              }
-            : require('../../assets/images/default-Image.png')
-        }
-        style={circle ? styles.circleImage : styles.image}
+        source={uri ? {uri} : require('../../assets/images/default-Image.png')}
+        style={[circle ? styles.circleImage : styles.image, style]}
       />
     </TouchableHighlight>
   );
@@ -50,9 +30,6 @@ const mapStateToProps = ({auth}) => ({
 
 export default connect(mapStateToProps)(StyledImage);
 const styles = StyleSheet.create({
-  image: {
-    flex: 1,
-  },
   circleImage: {
     flex: 1,
     width: 75,

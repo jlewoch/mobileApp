@@ -61,9 +61,7 @@ describe('>>> User Profile --> Inputs', () => {
   beforeEach(() => {
     wrapper = setup();
   });
-  it('Should change image state value when a new image is picked', () => {
-    const name = findByTestIdAttr(wrapper, 'userProfileName');
-  });
+
   it('Should change name state value when value is entered into name', () => {
     const name = findByTestIdAttr(wrapper, 'userProfileName');
     name.simulate('change', 'Test');

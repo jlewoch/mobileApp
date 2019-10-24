@@ -35,6 +35,7 @@ export class Input extends Component {
       error,
       feedback,
       keyboardType,
+      multiline,
     } = this.props;
     return (
       <View
@@ -66,8 +67,9 @@ export class Input extends Component {
             />
           )}
           <TextInput
-            keyboardType={keyboardType}
             testID="inputTextInput"
+            multiline={multiline}
+            keyboardType={keyboardType}
             autoFocus={autoFocus}
             style={[{flex: 1}, globalStyles.body]}
             placeholder={placeholder}
@@ -117,6 +119,7 @@ Input.propTypes = {
   onBlur: PropTypes.func,
   error: PropTypes.bool,
   feedback: PropTypes.bool,
+  multiline: PropTypes.bool,
 };
 export default Input;
 const styles = StyleSheet.create({});

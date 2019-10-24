@@ -8,7 +8,7 @@ import Icon from '../icon';
 const List = ({label, items, card, add}) => {
   return (
     <View testID="listComponentWrapper">
-      <Row style={{justifyContent: 'space-between'}}>
+      <Row style={{justifyContent: 'space-between', marginVertical: 15}}>
         <StyledText testID="listLabel">{label}</StyledText>
         {add && <Icon onPress={add} testID="listAddBtn" name="pluscircleo" />}
       </Row>
