@@ -22,7 +22,7 @@ StyledImage.propTypes = {
   uri: PropTypes.string,
   authorization: PropTypes.string,
   onPress: PropTypes.func,
-  containerStyle: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  style: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 const mapStateToProps = ({auth}) => ({
   authorization: auth.token,

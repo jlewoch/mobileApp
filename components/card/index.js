@@ -26,7 +26,7 @@ const Card = ({image, imageSrc, title, desc, details, onPress}) => {
             testID="cardImg"
             circle
             uri={imageSrc}
-            containerStyle={{marginRight: 15, height: 75}}
+            style={{marginRight: 15, height: 75}}
           />
         )}
         <View style={{flex: 1}}>

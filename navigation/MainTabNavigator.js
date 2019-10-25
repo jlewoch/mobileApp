@@ -1,6 +1,8 @@
 import React from 'react';
 import {Platform} from 'react-native';
 import {createStackNavigator} from 'react-navigation-stack';
+import {createDrawerNavigator} from 'react-navigation-drawer';
+
 import colors from '../constants/colors';
 // auth screens
 import LoginScreen from '../screens/login';
@@ -12,23 +14,36 @@ import HomeScreen from '../screens/home';
 // profile screens
 import UserProfileScreen from '../screens/userProfile';
 import PetProfileScreen from '../screens/petProfile';
+import Icon from '../components/icon';
 
 const config = Platform.select({
   web: {headerMode: 'screen'},
   default: {
     headerLayoutPreset: 'center',
-    defaultNavigationOptions: {
-      tabNavigator: {backgroundColor: '#ddd'},
-      headerStyle: {
-        backgroundColor: colors.main,
-      },
-      headerTitleStyle: {
-        alignSelf: 'center',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
+
+    defaultNavigationOptions: props => {
+      return {
+        tabNavigator: {backgroundColor: '#ddd'},
+        headerStyle: {
+          backgroundColor: colors.main,
+        },
+        headerTitleStyle: {
+          alignSelf: 'center',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerRight: () => (
+          <Icon
+            type="Entypo"
+            name="menu"
+            color="white"
+            onPress={() => props.navigation.toggleDrawer()}
+            style={{marginRight: 15}}
+          />
+        ),
+      };
     },
   },
 });
@@ -43,14 +58,40 @@ export const AuthStack = createStackNavigator(
 );
 export const HomeStack = createStackNavigator(
   {
-    Home: HomeScreen,
+    Dashboard: HomeScreen,
   },
-  {...config, initialRouteName: 'Home'},
+  {
+    ...config,
+    initialRouteName: 'Dashboard',
+    navigationOptions: {
+      drawerIcon: ({focused, tintColor}) => {
+        return <Icon name="user" color={focused ? tintColor : colors.main} />;
+      },
+    },
+  },
 );
 export const ProfileStack = createStackNavigator(
   {
     UserProfile: UserProfileScreen,
-    PetProfile: PetProfileScreen,
+    PetProfile: {screen: PetProfileScreen, path: 'profile/:name'},
   },
-  {...config, initialRouteName: 'Home'},
+  {
+    ...config,
+    navigationOptions: props => {
+      return {
+        drawerIcon: ({focused, tintColor}) => {
+          return <Icon name="user" color={focused ? tintColor : colors.main} />;
+        },
+      };
+    },
+  },
+);
+export default createDrawerNavigator(
+  {Home: HomeStack, Profile: ProfileStack},
+  {
+    initialRouteName: 'Home',
+    contentOptions: {
+      activeTintColor: '#e91e63',
+    },
+  },
 );

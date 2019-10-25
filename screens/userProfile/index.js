@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Dimensions, KeyboardAvoidingView} from 'react-native';
+import {KeyboardAvoidingView} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Section from '../../components/section';
@@ -10,11 +10,12 @@ import Input from '../../components/input';
 import List from '../../components/list';
 import {StyledImage} from '../../components/styledImage';
 import {checkName, checkCity, checkEmail} from '../../utils/validation';
+import {getPhotoAsync} from '../../utils/permissions';
 import {
-  checkImagePickerPermission,
-  getPhotoAsync,
-} from '../../utils/permissions';
-const {height, width} = Dimensions.get('window');
+  headerHeight,
+  deviceWidth,
+  deviceHeight,
+} from '../../constants/dimensions';
 export class UserProfileScreen extends Component {
   state = {
     errors: {name: null, email: null, city: null},
@@ -39,14 +40,15 @@ export class UserProfileScreen extends Component {
       <KeyboardAvoidingView
         style={{flex: 1, backgroundColor: 'white'}}
         behavior="padding"
-        enabled>
+        enabled
+        keyboardVerticalOffset={headerHeight}>
         <ScrollView
           testID="userProfileScreen"
           style={{flex: 1}}
           contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
           <StyledImage
             testID="userProfileImage"
-            style={{width, height: height / 3}}
+            style={{width: deviceWidth, height: deviceHeight / 3}}
             uri={values.image}
             onPress={this._selectPhotoAsync}
           />
@@ -137,9 +139,8 @@ export class UserProfileScreen extends Component {
   }
   _selectPhotoAsync = async () => {
     try {
-      await checkImagePickerPermission();
-      const img = await getPhotoAsync();
-      this._onChange(img.uri, 'image');
+      const uri = await getPhotoAsync();
+      this._onChange(uri, 'image');
     } catch (error) {
       console.log(error);
     }

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {Switch} from 'react-native';
 import Row from '../row';
 import StyledText from '../styledText';
+import colors from '../../constants/colors';
 
 const StyledSwitch = ({label, onChange, value}) => {
   return (
@@ -13,7 +14,12 @@ const StyledSwitch = ({label, onChange, value}) => {
         onValueChange={onChange}
         value={value}
       />
-      <StyledText testID="switchLabel">{label}</StyledText>
+      <StyledText
+        type="callout"
+        style={{color: value ? colors.main : colors.black}}
+        testID="switchLabel">
+        {label}
+      </StyledText>
     </Row>
   );
 };

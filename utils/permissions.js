@@ -2,12 +2,16 @@ import {PermissionsAndroid, Platform} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 const GRANTED = PermissionsAndroid.RESULTS.GRANTED;
 
-export const getPhotoAsync = () => {
-  return new Promise(function(resolve, reject) {
+export const getPhotoAsync = async () => {
+  await checkImagePickerPermission();
+  const photo = new Promise(function(resolve, reject) {
     ImagePicker.showImagePicker({}, resolve);
   });
+  if (response.didCancel || response.error || response.customButton)
+    throw Error('Image not selected');
+  return photo.uri;
 };
-export const checkImagePickerPermission = async fn => {
+const checkImagePickerPermission = async fn => {
   if (Platform.OS === 'android') {
     let camera = await checkCameraPermissionAsync();
     let storageWrite = await checkStorageWritePermissionAsync();

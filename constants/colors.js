@@ -3,7 +3,7 @@ const accentOrange = '#E0AA6C';
 const main = '#1DB3AC';
 const subText = '#c1c1c1';
 const white = '#fff';
-const black = '#666';
+const black = '#222';
 export default {
   subText,
   black,

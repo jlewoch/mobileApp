@@ -13,7 +13,7 @@ describe('>>> StyledImage --> Shallow Renders', () => {
       onPress: () => {},
       authorization: 'Test Auth',
       circle: true,
-      containerStyle: {},
+      style: {},
     };
     wrapper = setup(passedProps);
   });
@@ -31,7 +31,7 @@ describe('>>> StyledImage --> Checking PropTypes', () => {
       onPress: () => {},
       authorization: 'Test Auth',
       circle: true,
-      containerStyle: {},
+      style: {},
     };
     const propsError = checkProps(StyledImage, expectedProps);
     expect(propsError).toBeUndefined();

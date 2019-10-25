@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 // components
-import {KeyboardAvoidingView, Dimensions, StyleSheet} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, ScrollView} from 'react-native';
 import Header from '../../components/header';
 import Row from '../../components/row';
 import StyledText from '../../components/styledText';
 import Button from '../../components/button';
 import Input from '../../components/input';
 import Section from '../../components/section';
-import ProvinceDropdown from '../../components/provinceDropdown';
-import {ScrollView} from 'react-native-gesture-handler';
 import colors from '../../constants/colors';
 import {
   checkName,
@@ -16,7 +14,7 @@ import {
   checkCity,
   checkPassword,
 } from '../../utils/validation';
-const {height} = Dimensions.get('window');
+import {deviceHeight} from '../../constants/dimensions';
 
 export default class SignupScreen extends Component {
   static navigationOptions = {
@@ -49,10 +47,10 @@ export default class SignupScreen extends Component {
     return (
       <KeyboardAvoidingView
         testID="signupComponent"
-        style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}
+        style={{flex: 1}}
         behavior="padding"
         enabled
-        keyboardVerticalOffset={height / 4}>
+        keyboardVerticalOffset={deviceHeight / 4}>
         <ScrollView keyboardShouldPersistTaps="always" style={{flex: 1}}>
           <Section style={{flex: 1}}>
             <Input
