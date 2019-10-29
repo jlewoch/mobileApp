@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, TouchableHighlight} from 'react-native';
 import StyledText from '../styledText';
 import colors from '../../constants/colors';
+import Icon from '../icon';
 
 const SelectableOption = ({
   label,
@@ -20,7 +21,11 @@ const SelectableOption = ({
       ]}
       onPress={() => onChange(!selected)}>
       {type === 'icon' && iconName ? (
-        <Icon name={iconName} type={iconType} />
+        <Icon
+          name={iconName}
+          type={iconType}
+          color={selected ? colors.main : colors.subText}
+        />
       ) : (
         <StyledText
           style={[

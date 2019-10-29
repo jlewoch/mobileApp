@@ -1,33 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import colors from '../../constants/colors';
 
 const Icon = ({name, type, size, color, style, onPress}) => {
-  return type === 'Entypo' ? (
-    <Entypo
-      onPress={onPress}
-      testID="entypoComponent"
-      name={name}
-      size={size}
-      color={color}
-      style={style}
-    />
-  ) : (
-    <AntDesign
-      onPress={onPress}
-      testID="antComponent"
-      name={name}
-      size={size}
-      color={color}
-      style={style}
-    />
-  );
+  const selectIcon = () => {
+    switch (type) {
+      case 'Entypo':
+        return (
+          <Entypo
+            onPress={onPress}
+            testID="entypoComponent"
+            name={name}
+            size={size}
+            color={color}
+            style={style}
+          />
+        );
+      case 'FontAwesome5':
+        return (
+          <FontAwesome5
+            onPress={onPress}
+            testID="entypoComponent"
+            name={name}
+            size={size}
+            color={color}
+            style={style}
+          />
+        );
+
+      default:
+        return (
+          <AntDesign
+            onPress={onPress}
+            testID="antComponent"
+            name={name}
+            size={size}
+            color={color}
+            style={style}
+          />
+        );
+    }
+  };
+  return selectIcon(type);
 };
 Icon.defaultProps = {
   size: 26,
   color: colors.main,
+  type: '',
 };
 Icon.propTypes = {
   type: PropTypes.string,

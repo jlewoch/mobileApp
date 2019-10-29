@@ -19,6 +19,7 @@ import {
   deviceHeight,
 } from '../../constants/dimensions';
 import SelectableOption from '../../components/selectableOption';
+import ImageUpload from '../../components/imgUplaodBtn';
 
 // function to populate years dropdown
 const years = () => {
@@ -32,7 +33,7 @@ const years = () => {
 };
 export class PetProfileScreen extends Component {
   static navigationOptions = ({navigation}) => ({
-    title: 'pet profile',
+    title: 'Pet Profile',
     headerLeft: () => (
       <Icon
         name="arrowleft"
@@ -73,7 +74,14 @@ export class PetProfileScreen extends Component {
       this.setState(this.props.navigation.getParam('pet'));
     }
   }
-
+  // tell about pet
+  // auto guess breed
+  // auto select size based on breed
+  // pets name instead of name
+  // bold titles
+  // label for each section
+  // additional info for last
+  // pet info for first
   render() {
     const {
       img,
@@ -94,25 +102,29 @@ export class PetProfileScreen extends Component {
       vet_info,
       nutered_spayed,
     } = this.state;
-    console.log(this.props.navigation);
     return (
       <KeyboardAvoidingView
         testID="petProfileScreen"
         behavior="padding"
         enabled>
-        <ScrollView style={{backgroundColor: 'gray'}}>
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+          style={{backgroundColor: 'gray'}}>
           <StyledImage
             testID="petProfileImage"
             uri={img}
-            onPress={this._selectImageAsync}
             style={{width: deviceWidth, height: deviceHeight / 3}}
+            onPress={this._selectImageAsync}
           />
           <Section style={{marginBottom: 10}}>
+            <StyledText type="title3" style={{fontWeight: 'bold'}}>
+              General Pet Information
+            </StyledText>
             <Input
               testID="petProfileName"
               onChange={e => this._handleOnChange(e, 'name')}
               value={name}
-              label="Name"
+              label="Pets Name"
             />
             <Input
               testID="petProfileBreed"
@@ -124,7 +136,6 @@ export class PetProfileScreen extends Component {
               <Dropdown
                 testID="petProfileSize"
                 label="Size"
-                style={{flex: 1}}
                 options={[
                   {label: 'Small (1-10 kg)', value: 'Small'},
                   {label: 'Medium (11-26 kg)', value: 'Medium'},
@@ -139,7 +150,6 @@ export class PetProfileScreen extends Component {
                 onChange={e => this._handleOnChange(e, 'age')}
                 selected={age}
                 label="Age"
-                style={{flex: 1}}
                 options={years()}
               />
             </Row>
@@ -147,31 +157,41 @@ export class PetProfileScreen extends Component {
           <Section style={{marginBottom: 10}}>
             <Input
               testID="petProfileNotes"
-              label="Description"
+              label="About your pet"
               multiline
               onChange={e => this._handleOnChange(e, 'notes')}
               value={notes}
-              placeholder="Tell me about your pet"
             />
           </Section>
           <Section style={{marginBottom: 10}}>
-            <StyledText type="title3">Social Behavior</StyledText>
+            <StyledText type="title3" style={{fontWeight: 'bold'}}>
+              Social Behavior
+            </StyledText>
             <Section style={{paddingTop: 0}}>
               <StyledText type="headline" style={{marginVertical: 10}}>
                 Can be around?
               </StyledText>
               <Row>
                 <SelectableOption
+                  type="icon"
+                  iconName="child"
+                  iconType="FontAwesome5"
                   onChange={e => this._handleOnChange(e, 'around_child')}
                   selected={around_child}
                   label="Children"
                 />
                 <SelectableOption
+                  type="icon"
+                  iconName="dog"
+                  iconType="FontAwesome5"
                   onChange={e => this._handleOnChange(e, 'around_dog')}
                   selected={around_dog}
                   label="Dogs"
                 />
                 <SelectableOption
+                  type="icon"
+                  iconName="cat"
+                  iconType="FontAwesome5"
                   onChange={e => this._handleOnChange(e, 'around_cat')}
                   selected={around_cat}
                   label="Cats"
@@ -183,16 +203,25 @@ export class PetProfileScreen extends Component {
               </StyledText>
               <Row>
                 <SelectableOption
+                  type="icon"
+                  iconName="child"
+                  iconType="FontAwesome5"
                   onChange={e => this._handleOnChange(e, 'play_child')}
                   selected={play_child}
                   label="Children"
                 />
                 <SelectableOption
+                  type="icon"
+                  iconName="dog"
+                  iconType="FontAwesome5"
                   onChange={e => this._handleOnChange(e, 'play_dog')}
                   selected={play_dog}
                   label="Dogs"
                 />
                 <SelectableOption
+                  type="icon"
+                  iconName="cat"
+                  iconType="FontAwesome5"
                   onChange={e => this._handleOnChange(e, 'play_cat')}
                   selected={play_cat}
                   label="Cats"
@@ -220,6 +249,10 @@ export class PetProfileScreen extends Component {
             </Section>
           </Section>
           <Section>
+            <StyledText type="title3" style={{fontWeight: 'bold'}}>
+              Aditional Information
+            </StyledText>
+
             <Input
               testID="petProfileMedication"
               label="Medication"
@@ -246,18 +279,17 @@ export class PetProfileScreen extends Component {
           <Button
             style={{marginTop: 0}}
             testID="petProfileSaveBtn"
-            label={this.newPet ? 'Add Pet' : 'Save'}
+            label={this.newPet ? 'ADD PET' : 'SAVE'}
             onPress={() => this._submit(this.newPet)}
           />
         </ScrollView>
       </KeyboardAvoidingView>
     );
   }
-  _selectImageAsync = async () => {
-    try {
-      const uri = await getPhotoAsync();
+  _selectImageAsync = uri => {
+    if (uri) {
       this._handleOnChange(uri, 'img');
-    } catch (error) {}
+    }
   };
   _handleOnChange = (value, name) => {
     this.setState({[name]: value});
@@ -276,6 +308,7 @@ PetProfileScreen.propTypes = {
   around_cat: PropTypes.bool,
   microchip: PropTypes.bool,
   house_trained: PropTypes.bool,
+  nutered_spayed: PropTypes.bool,
   name: PropTypes.string,
   size: PropTypes.string,
   notes: PropTypes.string,

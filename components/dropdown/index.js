@@ -5,7 +5,7 @@ import StyledText from '../styledText';
 
 const Dropdown = ({options, onChange, selected, style, label}) => {
   return (
-    <View testID="dropdownComponent" style={style}>
+    <View testID="dropdownComponent" style={[{flex: 1}, style]}>
       <StyledText testID="dropdownLabel">{label}</StyledText>
 
       <Picker
