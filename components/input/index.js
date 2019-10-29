@@ -72,6 +72,7 @@ export class Input extends Component {
             multiline={multiline}
             keyboardType={keyboardType}
             autoFocus={autoFocus}
+            numberOfLines={1}
             style={[
               styles.input,
               isFocusedOrNotEmpty ? styles.inputFocused : {},
