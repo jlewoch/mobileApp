@@ -40,20 +40,11 @@ describe('>>> Signup --> Component Renders', () => {
   });
   it('Should have an initail state', () => {
     expect(wrapper.state()).toMatchObject({
-      errors: {
-        name: null,
-        email: null,
-        city: null,
-        password: null,
-        confirm: null,
-      },
-      values: {
-        name: '',
-        email: '',
-        city: '',
-        password: '',
-        confirm: '',
-      },
+      name: '',
+      email: '',
+      city: '',
+      password: '',
+      confirm: '',
     });
   });
 });
@@ -65,25 +56,25 @@ describe('>>> Signup --> Inputs', () => {
   it('Should set state when the value changes in name Input', () => {
     let name = findByTestIdAttr(wrapper, 'signupNameInput');
     name.simulate('change', 'Test');
-    expect(wrapper.state('values').name).toEqual('Test');
+    expect(wrapper.state().name).toEqual('Test');
   });
 
   it('Should set state when the value changes in city Input', () => {
     let city = findByTestIdAttr(wrapper, 'signupCityInput');
     city.simulate('change', 'Test');
-    expect(wrapper.state('values').city).toEqual('Test');
+    expect(wrapper.state().city).toEqual('Test');
   });
 
   it('Should set state when the value changes in password Input', () => {
     let password = findByTestIdAttr(wrapper, 'signupPasswordInput');
     password.simulate('change', 'Test');
-    expect(wrapper.state('values').password).toEqual('Test');
+    expect(wrapper.state().password).toEqual('Test');
   });
 
   it('Should set state when the value changes in confirm Input', () => {
     let wrapper = setup();
     let confirm = findByTestIdAttr(wrapper, 'signupConfirmInput');
     confirm.simulate('change', 'Test');
-    expect(wrapper.state('values').confirm).toEqual('Test');
+    expect(wrapper.state().confirm).toEqual('Test');
   });
 });

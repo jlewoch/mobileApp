@@ -21,29 +21,20 @@ export default class SignupScreen extends Component {
     header: () => <Header title="Signup" />,
   };
   state = {
-    errors: {
-      name: null,
-      email: null,
-      city: null,
-      password: null,
-      confirm: null,
-    },
-    values: {
-      name: '',
-      email: '',
-      city: '',
-      password: '',
-      confirm: '',
-    },
+    name: '',
+    email: '',
+    city: '',
+    password: '',
+    confirm: '',
   };
   render() {
-    const {errors, values} = this.state;
+    const {name, email, city, password, confirm} = this.state;
     const cantSubmit =
-      checkEmail(values.email) ||
-      checkCity(values.city) ||
-      checkName(values.name) ||
-      checkPassword(values.password) ||
-      values.confirm !== values.password;
+      checkEmail(email) ||
+      checkCity(city) ||
+      checkName(name) ||
+      checkPassword(password) ||
+      confirm !== password;
     return (
       <KeyboardAvoidingView
         testID="signupComponent"
@@ -55,74 +46,53 @@ export default class SignupScreen extends Component {
           <Section style={{flex: 1}}>
             <Input
               testID="signupNameInput"
-              feedback
-              autoFocus
-              placeholder="Name"
+              label="Name"
               icon="user"
-              value={values.name}
-              error={errors.name}
+              value={name}
               errormsg="Please enter your name"
               onChange={e => {
                 this._onChange(e, 'name');
               }}
-              onBlur={() => {
-                this._validate(checkName(values.name), 'name');
-              }}
+              validation={checkName}
             />
             <Input
               testID="signupEmailInput"
-              feedback
-              placeholder="Email"
+              label="Email"
               icon="mail"
-              value={values.email}
-              error={errors.email}
+              value={email}
               errormsg="Please enter a valid email address"
               onChange={e => this._onChange(e.trim(), 'email')}
-              onBlur={() => {
-                this._validate(checkEmail(values.email), 'email');
-              }}
+              validation={checkEmail}
             />
             <Input
               testID="signupCityInput"
-              feedback
-              placeholder="City"
+              label="City"
               icon="address"
-              value={values.city}
-              error={errors.city}
+              value={city}
               errormsg="Please enter a city name"
               onChange={e => this._onChange(e, 'city')}
-              onBlur={() => {
-                this._validate(checkCity(values.city), 'city');
-              }}
+              validation={checkCity}
             />
 
             <Input
               testID="signupPasswordInput"
-              feedback
-              placeholder="Password"
+              label="Password"
               icon="lock"
-              value={values.password}
-              error={errors.password}
+              value={password}
               errormsg={'Password must be minimum 8 characters'}
               secure
               onChange={e => this._onChange(e, 'password')}
-              onBlur={() => {
-                this._validate(checkPassword(values.password), 'password');
-              }}
+              validation={checkPassword}
             />
             <Input
               testID="signupConfirmInput"
-              feedback
-              placeholder="Confirm Password"
+              label="Confirm Password"
               icon="lock"
-              value={values.confirm}
-              error={errors.confirm}
+              value={confirm}
               errormsg="Password and confirm password do not match"
               secure
               onChange={e => this._onChange(e, 'confirm')}
-              onBlur={() => {
-                this._validate(values.confirm !== values.password, 'confirm');
-              }}
+              validation={() => confirm !== password}
             />
 
             <Button testID="signupBtn" disabled={cantSubmit} label="Signup" />
@@ -145,11 +115,8 @@ export default class SignupScreen extends Component {
     );
   }
 
-  _validate = (value, name) => {
-    this.setState({errors: {...this.state.errors, [name]: value}});
-  };
   _onChange = (value, name) => {
-    this.setState({values: {...this.state.values, [name]: value}});
+    this.setState({[name]: value});
   };
 }
 const styles = StyleSheet.create({});

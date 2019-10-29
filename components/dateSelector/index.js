@@ -97,3 +97,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 });
+//   function for backend to send dates
+//   _arangeDates = dates => {
+//     let today = moment();
+//     // subtract one so it includes today in the while loop
+//     let day = today.clone().subtract(1, 'days');
+//     // available dates and will be selectable
+//     const customDatesStyles = [];
+//     // dates that are not available
+//     const disabledDates = [];
+//     while (day.add(1, 'day').isSame(today, 'month')) {
+//       // check if dates Object has the key of curent day being checked
+//       if (dates[day.format('L')]) {
+//         customDatesStyles.push({
+//           date: day.clone(),
+//           style: {
+//             backgroundColor: colors.main,
+//           },
+//           textStyle: {color: colors.white, fontWeight: 'bold'},
+//         });
+//       } else {
+//         //   disable if it is not in the passed available object
+//         disabledDates.push(day.clone());
+//       }
+//     }
+//     // set state with new values to pass to the calendar
+//     this.setState({customDatesStyles, disabledDates});
+//   };

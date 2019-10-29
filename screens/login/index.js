@@ -16,8 +16,8 @@ export class LoginScreen extends Component {
     header: () => <Header title="App Name" />,
   };
   state = {
-    errors: {email: null},
-    values: {email: '', password: ''},
+    email: '',
+    password: '',
   };
   render() {
     const {values, errors} = this.state;
@@ -25,23 +25,21 @@ export class LoginScreen extends Component {
       <Section testID="loginComponent">
         <Input
           testID="loginEmailInput"
+          label="Email"
           autoFocus
-          placeholder="Email"
           icon="mail"
-          value={values.email}
-          feedback
+          value={email}
           errormsg="Please enter a valid email address"
-          error={errors.email}
-          onChange={e => this._onChange(e, 'email')}
-          onBlur={e => this._onBlur(checkEmail(values.email), 'email')}
+          onChange={e => this._handleOnChange(e, 'email')}
+          validation={checkEmail}
         />
         <Input
           testID="loginPasswordInput"
-          placeholder="Password"
+          label="Password"
           icon="lock"
-          value={values.password}
+          value={password}
           secure
-          onChange={e => this._onChange(e, 'password')}
+          onChange={e => this._handleOnChange(e, 'password')}
         />
         <StyledText
           testID="loginForgot"
@@ -55,7 +53,7 @@ export class LoginScreen extends Component {
         </StyledText>
         <Button
           testID="loginBtn"
-          disabled={checkEmail(values.email) || checkPassword(values.password)}
+          disabled={checkEmail(email) || checkPassword(password)}
           label="Login"
           onPress={this._signInAsync}
         />
@@ -76,11 +74,9 @@ export class LoginScreen extends Component {
       </Section>
     );
   }
-  _onBlur = (value, name) => {
-    this.setState({errors: {...this.state.errors, [name]: value}});
-  };
-  _onChange = (value, name) => {
-    this.setState({values: {...this.state.values, [name]: value.trim()}});
+
+  _handleOnChange = (value, name) => {
+    this.setState({[name]: value.trim()});
   };
   _signInAsync = async () => {};
 }

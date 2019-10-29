@@ -38,7 +38,6 @@ describe('>>> Login --> Component Renders', () => {
     const state = wrapper.state();
     expect(state.values.email).toEqual('');
     expect(state.values.password).toEqual('');
-    expect(state.errors.email).toEqual(null);
   });
 });
 describe('>>> Login --> Inputs', () => {
@@ -46,13 +45,13 @@ describe('>>> Login --> Inputs', () => {
     let wrapper = setup();
     // email
     const email = findByTestIdAttr(wrapper, 'loginEmailInput');
-    expect(wrapper.state('values').email).toEqual('');
+    expect(wrapper.state().email).toEqual('');
     email.simulate('change', 'j');
-    expect(wrapper.state('values').email).toEqual('j');
+    expect(wrapper.state().email).toEqual('j');
     // password
     const password = findByTestIdAttr(wrapper, 'loginPasswordInput');
-    expect(wrapper.state('values').password).toEqual('');
+    expect(wrapper.state().password).toEqual('');
     password.simulate('change', 'j');
-    expect(wrapper.state('values').password).toEqual('j');
+    expect(wrapper.state().password).toEqual('j');
   });
 });

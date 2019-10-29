@@ -64,25 +64,22 @@ describe('>>> Pet Profile --> Component Renders', () => {
   });
   it('Should have an initial state', () => {
     expect(wrapper.state()).toMatchObject({
-      errors: {name: null},
-      values: {
-        img: '',
-        breed: '',
-        age: 0,
-        play_child: false,
-        play_dog: false,
-        play_cat: false,
-        around_child: false,
-        around_dog: false,
-        around_cat: false,
-        microchip: false,
-        house_trained: false,
-        name: '',
-        size: '',
-        notes: '',
-        medication: '',
-        vet_info: '',
-      },
+      img: '',
+      breed: '',
+      age: 0,
+      play_child: false,
+      play_dog: false,
+      play_cat: false,
+      around_child: false,
+      around_dog: false,
+      around_cat: false,
+      microchip: false,
+      house_trained: false,
+      name: '',
+      size: '',
+      notes: '',
+      medication: '',
+      vet_info: '',
     });
   });
 });
@@ -102,67 +99,67 @@ describe('>>> Pet Profile --> Inputs', () => {
   it('Should change state when value is changed in name input', () => {
     const name = findByTestIdAttr(wrapper, 'petProfileName');
     name.simulate('change', 'Test');
-    expect(wrapper.state('values').name).toEqual('Test');
+    expect(wrapper.state().name).toEqual('Test');
   });
   it('Should change state when value is changed in breed input', () => {
     const breed = findByTestIdAttr(wrapper, 'petProfileBreed');
     breed.simulate('change', 'Test');
-    expect(wrapper.state('values').breed).toEqual('Test');
+    expect(wrapper.state().breed).toEqual('Test');
   });
   it('Should change state when value is changed in age input', () => {
     const age = findByTestIdAttr(wrapper, 'petProfileAge');
     age.simulate('change', 'Test');
-    expect(wrapper.state('values').age).toEqual('Test');
+    expect(wrapper.state().age).toEqual('Test');
   });
   it('Should change state when value is changed in notes input', () => {
     const notes = findByTestIdAttr(wrapper, 'petProfileNotes');
     notes.simulate('change', 'Test');
-    expect(wrapper.state('values').notes).toEqual('Test');
+    expect(wrapper.state().notes).toEqual('Test');
   });
   it('Should change state when value is changed in vet info input', () => {
     const vet = findByTestIdAttr(wrapper, 'petProfileVet');
     vet.simulate('change', 'Test');
-    expect(wrapper.state('values').vet_info).toEqual('Test');
+    expect(wrapper.state().vet_info).toEqual('Test');
   });
   it('Should change state when value is changed in play with children switch', () => {
     const playChild = findByTestIdAttr(wrapper, 'petProfilePlayChildren');
     playChild.simulate('change', true);
-    expect(wrapper.state('values').play_child).toEqual(true);
+    expect(wrapper.state().play_child).toEqual(true);
   });
   it('Should change state when value is changed in play with dog switch', () => {
     const playDog = findByTestIdAttr(wrapper, 'petProfilePlayDog');
     playDog.simulate('change', true);
-    expect(wrapper.state('values').play_dog).toEqual(true);
+    expect(wrapper.state().play_dog).toEqual(true);
   });
   it('Should change state when value is changed in play with cat switch', () => {
     const playCat = findByTestIdAttr(wrapper, 'petProfilePlayCat');
     playCat.simulate('change', true);
-    expect(wrapper.state('values').play_cat).toEqual(true);
+    expect(wrapper.state().play_cat).toEqual(true);
   });
   it('Should change state when value is changed in can be around children switch', () => {
     const aroundChild = findByTestIdAttr(wrapper, 'petProfileAroundChildren');
     aroundChild.simulate('change', true);
-    expect(wrapper.state('values').around_child).toEqual(true);
+    expect(wrapper.state().around_child).toEqual(true);
   });
   it('Should change state when value is changed in can be around dog switch', () => {
     const aroundDog = findByTestIdAttr(wrapper, 'petProfileAroundDog');
     aroundDog.simulate('change', true);
-    expect(wrapper.state('values').around_dog).toEqual(true);
+    expect(wrapper.state().around_dog).toEqual(true);
   });
   it('Should change state when value is changed in can be around cat switch', () => {
     const aroundCat = findByTestIdAttr(wrapper, 'petProfileAroundCat');
     aroundCat.simulate('change', true);
-    expect(wrapper.state('values').around_cat).toEqual(true);
+    expect(wrapper.state().around_cat).toEqual(true);
   });
   it('Should change state when value is changed in house trained switch', () => {
     const trained = findByTestIdAttr(wrapper, 'petProfileHouseTrained');
     trained.simulate('change', true);
-    expect(wrapper.state('values').house_trained).toEqual(true);
+    expect(wrapper.state().house_trained).toEqual(true);
   });
   it('Should change state when value is changed in microchip switch', () => {
     const chipped = findByTestIdAttr(wrapper, 'petProfileMicrochip');
     chipped.simulate('change', true);
-    expect(wrapper.state('values').microchip).toEqual(true);
+    expect(wrapper.state().microchip).toEqual(true);
   });
 });
 

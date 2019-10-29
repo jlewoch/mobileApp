@@ -11,22 +11,19 @@ export default class ForgotPasswordScreen extends Component {
   static navigationOptions = {
     header: () => <Header title="Forgot Password" />,
   };
-  state = {email: '', emailErr: null};
+  state = {email: ''};
   render() {
-    const {email, emailErr} = this.state;
+    const {email} = this.state;
     return (
       <Section testID="forgotComponent" style={{flex: 1}}>
         <Input
           testID="forgotEmailInput"
-          autoFocus
-          feedback
-          placeholder="Email"
+          label="Email"
           icon="mail"
           value={email}
-          error={emailErr}
           errormsg="Please enter a valid email address"
           onChange={e => this.setState({email: e.trim()})}
-          onBlur={() => this.setState({emailErr: checkEmail(email)})}
+          validation={checkEmail}
         />
         <Button
           testID="forgotResetBtn"

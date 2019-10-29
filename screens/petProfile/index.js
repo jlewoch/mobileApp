@@ -18,6 +18,7 @@ import {
   deviceWidth,
   deviceHeight,
 } from '../../constants/dimensions';
+import SelectableOption from '../../components/selectableOption';
 
 // function to populate years dropdown
 const years = () => {
@@ -48,25 +49,23 @@ export class PetProfileScreen extends Component {
   newPet = true;
 
   state = {
-    errors: {name: null},
-    values: {
-      img: '',
-      breed: '',
-      age: 0,
-      play_child: false,
-      play_dog: false,
-      play_cat: false,
-      around_child: false,
-      around_dog: false,
-      around_cat: false,
-      microchip: false,
-      house_trained: false,
-      name: '',
-      size: '',
-      notes: '',
-      medication: '',
-      vet_info: '',
-    },
+    img: '',
+    breed: '',
+    age: 0,
+    play_child: false,
+    play_dog: false,
+    play_cat: false,
+    around_child: false,
+    around_dog: false,
+    around_cat: false,
+    microchip: false,
+    house_trained: false,
+    nutered_spayed: false,
+    name: '',
+    size: '',
+    notes: '',
+    medication: '',
+    vet_info: '',
   };
   componentDidMount() {
     if (this.props.navigation && this.props.navigation.getParam('pet')) {
@@ -76,33 +75,50 @@ export class PetProfileScreen extends Component {
   }
 
   render() {
-    const {values, errors} = this.state;
+    const {
+      img,
+      breed,
+      age,
+      play_child,
+      play_dog,
+      play_cat,
+      around_child,
+      around_dog,
+      around_cat,
+      microchip,
+      house_trained,
+      name,
+      size,
+      notes,
+      medication,
+      vet_info,
+      nutered_spayed,
+    } = this.state;
     console.log(this.props.navigation);
     return (
       <KeyboardAvoidingView
         testID="petProfileScreen"
         behavior="padding"
-        enabled
-        keyboardVerticalOffset={headerHeight}>
-        <ScrollView>
+        enabled>
+        <ScrollView style={{backgroundColor: 'gray'}}>
           <StyledImage
             testID="petProfileImage"
-            uri={values.img}
+            uri={img}
             onPress={this._selectImageAsync}
             style={{width: deviceWidth, height: deviceHeight / 3}}
           />
-          <Section>
+          <Section style={{marginBottom: 10}}>
             <Input
               testID="petProfileName"
-              onChange={e => this._onChange(e, 'name')}
-              value={values.name}
-              placeholder="Name"
+              onChange={e => this._handleOnChange(e, 'name')}
+              value={name}
+              label="Name"
             />
             <Input
               testID="petProfileBreed"
-              onChange={e => this._onChange(e, 'breed')}
-              value={values.bread}
-              placeholder="Breed"
+              onChange={e => this._handleOnChange(e, 'breed')}
+              value={breed}
+              label="Breed"
             />
             <Row>
               <Dropdown
@@ -115,112 +131,120 @@ export class PetProfileScreen extends Component {
                   {label: 'Large (27-44kg)', value: 'Large'},
                   {label: 'Giant (45 kg+)', value: 'Giant'},
                 ]}
-                onChange={e => this._onChange(e, 'size')}
-                selected={values.size}
+                onChange={e => this._handleOnChange(e, 'size')}
+                selected={size}
               />
               <Dropdown
                 testID="petProfileAge"
-                onChange={e => this._onChange(e, 'age')}
-                selected={values.age}
+                onChange={e => this._handleOnChange(e, 'age')}
+                selected={age}
                 label="Age"
                 style={{flex: 1}}
                 options={years()}
               />
             </Row>
+          </Section>
+          <Section style={{marginBottom: 10}}>
+            <Input
+              testID="petProfileNotes"
+              label="Description"
+              multiline
+              onChange={e => this._handleOnChange(e, 'notes')}
+              value={notes}
+              placeholder="Tell me about your pet"
+            />
+          </Section>
+          <Section style={{marginBottom: 10}}>
             <StyledText type="title3">Social Behavior</StyledText>
             <Section style={{paddingTop: 0}}>
-              <StyledText
-                type="headline"
-                style={{marginVertical: 10, fontWeight: '600'}}>
+              <StyledText type="headline" style={{marginVertical: 10}}>
                 Can be around?
               </StyledText>
-              <StyledSwitch
-                testID="petProfileAroundChildren"
-                label="Children"
-                onChange={e => this._onChange(e, 'around_child')}
-                value={values.around_child}
-              />
-              <StyledSwitch
-                testID="petProfileAroundDog"
-                label="Dogs"
-                onChange={e => this._onChange(e, 'around_dog')}
-                value={values.around_dog}
-              />
-              <StyledSwitch
-                testID="petProfileAroundCat"
-                label="Cats"
-                onChange={e => this._onChange(e, 'around_cat')}
-                value={values.around_cat}
-              />
-            </Section>
+              <Row>
+                <SelectableOption
+                  onChange={e => this._handleOnChange(e, 'around_child')}
+                  selected={around_child}
+                  label="Children"
+                />
+                <SelectableOption
+                  onChange={e => this._handleOnChange(e, 'around_dog')}
+                  selected={around_dog}
+                  label="Dogs"
+                />
+                <SelectableOption
+                  onChange={e => this._handleOnChange(e, 'around_cat')}
+                  selected={around_cat}
+                  label="Cats"
+                />
+              </Row>
 
-            <Section>
-              <StyledText>Can play with?</StyledText>
-              <StyledSwitch
-                testID="petProfilePlayChildren"
-                label="Children"
-                onChange={e => this._onChange(e, 'play_child')}
-                value={values.play_child}
-              />
-              <StyledSwitch
-                testID="petProfilePlayDog"
-                label="Dogs"
-                onChange={e => this._onChange(e, 'play_dog')}
-                value={values.play_dog}
-              />
-              <StyledSwitch
-                testID="petProfilePlayCat"
-                label="Cats"
-                onChange={e => this._onChange(e, 'play_cat')}
-                value={values.play_cat}
-              />
-            </Section>
+              <StyledText type="headline" style={{marginBottom: 10}}>
+                Can play with?
+              </StyledText>
+              <Row>
+                <SelectableOption
+                  onChange={e => this._handleOnChange(e, 'play_child')}
+                  selected={play_child}
+                  label="Children"
+                />
+                <SelectableOption
+                  onChange={e => this._handleOnChange(e, 'play_dog')}
+                  selected={play_dog}
+                  label="Dogs"
+                />
+                <SelectableOption
+                  onChange={e => this._handleOnChange(e, 'play_cat')}
+                  selected={play_cat}
+                  label="Cats"
+                />
+              </Row>
 
-            <Section>
-              <StyledText>Other</StyledText>
-              <StyledSwitch
-                testID="petProfileMicrochip"
+              <StyledText type="headline" style={{marginBottom: 10}}>
+                Other
+              </StyledText>
+              <SelectableOption
+                onChange={e => this._handleOnChange(e, 'microchip')}
+                selected={microchip}
                 label="Microchip"
-                onChange={e => this._onChange(e, 'microchip')}
-                value={values.microchip}
               />
-              <StyledSwitch
-                testID="petProfileHouseTrained"
-                label="House trained"
-                onChange={e => this._onChange(e, 'house_trained')}
-                value={values.house_trained}
+              <SelectableOption
+                onChange={e => this._handleOnChange(e, 'house_trained')}
+                selected={house_trained}
+                label="House Trained"
               />
-            </Section>
-
-            <Section>
-              <Input
-                testID="petProfileMedication"
-                label="Medication"
-                multiline
-                onChange={e => this._onChange(e, 'medication')}
-                value={values.medication}
-                placeholder="Medication"
-              />
-              <Input
-                testID="petProfileVet"
-                label="Vet Info"
-                multiline
-                onChange={e => this._onChange(e, 'vet_info')}
-                value={values.vet_info}
-                placeholder="Vet Info"
-              />
-              <Input
-                testID="petProfileNotes"
-                label="Notes"
-                multiline
-                onChange={e => this._onChange(e, 'notes')}
-                value={values.notes}
-                placeholder="Notes"
+              <SelectableOption
+                onChange={e => this._handleOnChange(e, 'nutered_spayed')}
+                selected={nutered_spayed}
+                label="Nutered\Spayed"
               />
             </Section>
           </Section>
+          <Section>
+            <Input
+              testID="petProfileMedication"
+              label="Medication"
+              multiline
+              onChange={e => this._handleOnChange(e, 'medication')}
+              value={medication}
+            />
+            <Input
+              testID="petProfileVet"
+              label="Vet Info"
+              multiline
+              onChange={e => this._handleOnChange(e, 'vet_info')}
+              value={vet_info}
+            />
+            <Input
+              testID="petProfileNotes"
+              label="Notes"
+              multiline
+              onChange={e => this._handleOnChange(e, 'notes')}
+              value={notes}
+            />
+          </Section>
 
           <Button
+            style={{marginTop: 0}}
             testID="petProfileSaveBtn"
             label={this.newPet ? 'Add Pet' : 'Save'}
             onPress={() => this._submit(this.newPet)}
@@ -232,11 +256,11 @@ export class PetProfileScreen extends Component {
   _selectImageAsync = async () => {
     try {
       const uri = await getPhotoAsync();
-      this._onChange(uri, 'img');
+      this._handleOnChange(uri, 'img');
     } catch (error) {}
   };
-  _onChange = (value, name) => {
-    this.setState({values: {...this.state.values, [name]: value}});
+  _handleOnChange = (value, name) => {
+    this.setState({[name]: value});
   };
   _submit = () => {};
 }

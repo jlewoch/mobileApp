@@ -25,7 +25,6 @@ describe('>>> Forgot Password --> Component Renders', () => {
   it('Should have an initail state', () => {
     expect(wrapper.state()).toMatchObject({
       email: '',
-      emailErr: null,
     });
   });
 });
