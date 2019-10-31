@@ -1,15 +1,12 @@
 import React from 'react';
-import {View, Picker} from 'react-native';
+import {View, Picker, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import StyledText from '../styledText';
-import styles from './styles';
 
 const Dropdown = ({options, onChange, selected, style, label}) => {
   return (
-    <View testID="dropdownComponent" style={style}>
-      <StyledText testID="dropdownLabel" style={styles.label}>
-        {label}
-      </StyledText>
+    <View testID="dropdownComponent" style={[style]}>
+      <StyledText testID="dropdownLabel">{label}</StyledText>
 
       <Picker
         testID="dropdownPicker"

@@ -1,7 +1,5 @@
 import React from 'react';
-import {shallow} from 'enzyme';
 import Input from './index';
-import {findByTestIdAttr, checkProps} from '../../utils';
 const setup = (props = {}) => {
   const component = shallow(<Input {...props} />);
   return component;
@@ -135,6 +133,7 @@ describe('>>> Input --> Functions', () => {
 describe('>>> Input --> Checking PropTypes', () => {
   it('Should not throw a warning', () => {
     const expectedProps = {
+      multiline: true,
       errormsg: 'Test error',
       placeholder: 'Test placeholder',
       label: 'Test Label',

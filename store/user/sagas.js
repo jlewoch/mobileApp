@@ -28,7 +28,6 @@ function* updatePet({form}) {
 
 function* addRequest(payload) {
   try {
-    console.log('payload');
     const pet = yield call(apiCall, REQUEST, 'POST', payload);
   } catch (error) {
     console.log(error.message);

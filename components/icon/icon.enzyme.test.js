@@ -1,7 +1,5 @@
 import React from 'react';
-import {shallow} from 'enzyme';
 import Icon from './index';
-import {findByTestIdAttr, checkProps} from '../../utils';
 const setup = (props = {}) => {
   const component = shallow(<Icon {...props} />);
   return component;

@@ -1,8 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import styles from './styles';
 import colors from '../../constants/colors';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native';
 import StyledText from '../styledText';
 
 const Button = ({label, onPress, disabled, style}) => {
@@ -15,10 +14,10 @@ const Button = ({label, onPress, disabled, style}) => {
         style={[
           {
             padding: 10,
-            backgroundColor: colors.accentOrange,
+            backgroundColor: disabled ? colors.subText : colors.accentOrange,
             alignItems: 'center',
             justifyContent: 'center',
-            marginVertical: 20,
+            marginTop: 20,
           },
           style,
         ]}>

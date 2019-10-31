@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Text} from 'react-native';
+import {Text, Animated} from 'react-native';
 import globalStyles from '../../globalStyles';
 import colors from '../../constants/colors';
 
-const StyledText = ({type, style, children}) => {
+const StyledText = ({type, style, children, onPress}) => {
   return (
-    <Text
+    <Animated.Text
+      onPress={onPress}
       testID="textComponent"
       style={[
         {fontFamily: 'Roboto', color: colors.black},
@@ -14,10 +15,11 @@ const StyledText = ({type, style, children}) => {
         style,
       ]}>
       {children}
-    </Text>
+    </Animated.Text>
   );
 };
 StyledText.propTypes = {
+  onPress: PropTypes.func,
   type: PropTypes.string,
   style: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   children: PropTypes.string,

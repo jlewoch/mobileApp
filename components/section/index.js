@@ -1,9 +1,10 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
+import colors from '../../constants/colors';
 
 const Section = ({style, children}) => {
   return (
-    <View style={[{backgroundColor: 'white', padding: 15}, style]}>
+    <View style={[{padding: 15, backgroundColor: colors.white}, style]}>
       {children}
     </View>
   );

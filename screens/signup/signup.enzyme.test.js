@@ -1,65 +1,50 @@
 import React from 'react';
-import {shallow} from 'enzyme';
 import SignupScreen from './index';
-import {findByTestIdAttr} from '../../utils';
-import {equal} from 'assert';
 const setup = (props = {}) => {
   const component = shallow(<SignupScreen {...props} />);
   return component;
 };
+
 describe('>>> Signup --> Component Renders', () => {
   let wrapper;
   beforeEach(() => {
     wrapper = setup();
   });
   it('render without errors', () => {
-    const component = findByTestIdAttr(wrapper, 'signupComponent');
-    expect(component.length).toBe(1);
+    expect(findByTestIdAttr(wrapper, 'signupComponent')).toHaveLength(1);
   });
   it('Has a name text input', () => {
-    const email = findByTestIdAttr(wrapper, 'signupEmailInput');
-    expect(email.length).toBe(1);
+    expect(findByTestIdAttr(wrapper, 'signupNameInput')).toHaveLength(1);
   });
   it('Has a email text input', () => {
-    const email = findByTestIdAttr(wrapper, 'signupEmailInput');
-    expect(email.length).toBe(1);
+    expect(findByTestIdAttr(wrapper, 'signupEmailInput')).toHaveLength(1);
   });
   it('Has a city text input', () => {
-    const email = findByTestIdAttr(wrapper, 'signupEmailInput');
-    expect(email.length).toBe(1);
+    expect(findByTestIdAttr(wrapper, 'signupCityInput')).toHaveLength(1);
   });
-  it('Has a province dropdown', () => {
-    const email = findByTestIdAttr(wrapper, 'signupEmailInput');
-    expect(email.length).toBe(1);
-  });
+
   it('Has a password secure input', () => {
-    const password = findByTestIdAttr(wrapper, 'signupPasswordInput');
-    expect(password.length).toBe(1);
+    expect(findByTestIdAttr(wrapper, 'signupPasswordInput')).toHaveLength(1);
   });
   it('Has a confirm password secure input', () => {
-    const password = findByTestIdAttr(wrapper, 'signupConfirmInput');
-    expect(password.length).toBe(1);
+    expect(findByTestIdAttr(wrapper, 'signupConfirmInput')).toHaveLength(1);
   });
-  it('Has a signup button', () => {
+  it('Has a signup button that is disabled', () => {
     const signup = findByTestIdAttr(wrapper, 'signupBtn');
-    expect(signup.length).toBe(1);
+    expect(signup).toHaveLength(1);
+    expect(signup.props().disabled).toEqual(true);
   });
   it('Has a login button', () => {
     const login = findByTestIdAttr(wrapper, 'signupLogin');
     expect(login.length).toBe(1);
   });
   it('Should have an initail state', () => {
-    const instance = renderer.create(<SignupScreen />).getInstance();
-    expect(instance.state).toEqual({
-      errors: {},
-      values: {
-        name: '',
-        email: '',
-        city: '',
-        province: null,
-        password: '',
-        confirm: '',
-      },
+    expect(wrapper.state()).toMatchObject({
+      name: '',
+      email: '',
+      city: '',
+      password: '',
+      confirm: '',
     });
   });
 });
@@ -68,7 +53,28 @@ describe('>>> Signup --> Inputs', () => {
   beforeEach(() => {
     wrapper = setup();
   });
-  it('Should change state when a value is typed in to each field', () => {
-    expect('j').toEqual('j');
+  it('Should set state when the value changes in name Input', () => {
+    let name = findByTestIdAttr(wrapper, 'signupNameInput');
+    name.simulate('change', 'Test');
+    expect(wrapper.state().name).toEqual('Test');
+  });
+
+  it('Should set state when the value changes in city Input', () => {
+    let city = findByTestIdAttr(wrapper, 'signupCityInput');
+    city.simulate('change', 'Test');
+    expect(wrapper.state().city).toEqual('Test');
+  });
+
+  it('Should set state when the value changes in password Input', () => {
+    let password = findByTestIdAttr(wrapper, 'signupPasswordInput');
+    password.simulate('change', 'Test');
+    expect(wrapper.state().password).toEqual('Test');
+  });
+
+  it('Should set state when the value changes in confirm Input', () => {
+    let wrapper = setup();
+    let confirm = findByTestIdAttr(wrapper, 'signupConfirmInput');
+    confirm.simulate('change', 'Test');
+    expect(wrapper.state().confirm).toEqual('Test');
   });
 });
