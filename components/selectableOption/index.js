@@ -14,7 +14,7 @@ const SelectableOption = ({
 }) => {
   return (
     <TouchableHighlight
-      underlayColor="none"
+      underlayColor="#fff"
       style={[
         styles.wrapper,
         selected ? styles.selectedWrapper : styles.deSelectedWrapper,

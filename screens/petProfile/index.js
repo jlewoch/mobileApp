@@ -6,20 +6,22 @@ import {KeyboardAvoidingView, ScrollView} from 'react-native';
 import Row from '../../components/row';
 import {StyledImage} from '../../components/styledImage';
 import Section from '../../components/section';
-import StyledSwitch from '../../components/styledSwitch';
 import StyledText from '../../components/styledText';
 import Input from '../../components/input';
 import Icon from '../../components/icon';
 import Button from '../../components/button';
 import Dropdown from '../../components/dropdown';
-import {getPhotoAsync} from '../../utils/permissions';
 import {
   headerHeight,
   deviceWidth,
   deviceHeight,
 } from '../../constants/dimensions';
 import SelectableOption from '../../components/selectableOption';
-import ImageUpload from '../../components/imgUplaodBtn';
+/*  
+  for furture
+  auto guess breed
+  auto select size based on breed
+*/
 
 // function to populate years dropdown
 const years = () => {
@@ -74,14 +76,7 @@ export class PetProfileScreen extends Component {
       this.setState(this.props.navigation.getParam('pet'));
     }
   }
-  // tell about pet
-  // auto guess breed
-  // auto select size based on breed
-  // pets name instead of name
-  // bold titles
-  // label for each section
-  // additional info for last
-  // pet info for first
+
   render() {
     const {
       img,
@@ -144,6 +139,7 @@ export class PetProfileScreen extends Component {
                 ]}
                 onChange={e => this._handleOnChange(e, 'size')}
                 selected={size}
+                style={{flex: 1}}
               />
               <Dropdown
                 testID="petProfileAge"
@@ -151,6 +147,7 @@ export class PetProfileScreen extends Component {
                 selected={age}
                 label="Age"
                 options={years()}
+                style={{flex: 1}}
               />
             </Row>
           </Section>

@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import {KeyboardAvoidingView} from 'react-native';
+import {KeyboardAvoidingView, ScrollView, View} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Section from '../../components/section';
-import {ScrollView} from 'react-native-gesture-handler';
 import Card from '../../components/card';
 import Button from '../../components/button';
 import Input from '../../components/input';
@@ -16,16 +15,17 @@ import {
   deviceWidth,
   deviceHeight,
 } from '../../constants/dimensions';
+import Icon from '../../components/icon';
+import colors from '../../constants/colors';
+import Row from '../../components/row';
+import StyledText from '../../components/styledText';
 export class UserProfileScreen extends Component {
   state = {
-    errors: {name: null, email: null, city: null},
-    values: {
-      image: '',
-      name: '',
-      email: '',
-      city: '',
-      street_address: '',
-    },
+    image: null,
+    name: null,
+    email: null,
+    city: null,
+    street_address: null,
   };
   componentDidMount() {
     if (this.props.user) {
@@ -35,7 +35,7 @@ export class UserProfileScreen extends Component {
   }
 
   render() {
-    const {values, errors} = this.state;
+    const {image, name, email, city, street_address} = this.state;
     return (
       <KeyboardAvoidingView
         style={{flex: 1, backgroundColor: 'white'}}
@@ -49,64 +49,51 @@ export class UserProfileScreen extends Component {
           <StyledImage
             testID="userProfileImage"
             style={{width: deviceWidth, height: deviceHeight / 3}}
-            uri={values.image}
+            uri={image}
             onPress={this._selectPhotoAsync}
           />
           <Section>
             <Input
               testID="userProfileName"
-              feedback
-              placeholder="Name"
+              label="Name"
               icon="user"
-              value={values.name}
-              error={errors.name}
+              value={name}
               errormsg="Please enter your name"
               onChange={e => {
                 this._onChange(e, 'name');
               }}
-              onBlur={() => {
-                this._validate(checkName(values.name), 'name');
-              }}
+              validation={checkName}
             />
             <Input
               testID="userProfileEmail"
-              feedback
-              placeholder="Email"
+              label="Email"
               icon="mail"
-              value={values.email}
-              error={errors.email}
+              value={email}
               errormsg="Please enter a valid email address"
               onChange={e => this._onChange(e.trim(), 'email')}
-              onBlur={() => {
-                this._validate(checkEmail(values.email), 'email');
-              }}
+              validation={checkEmail}
             />
             <Input
               testID="userProfileCity"
-              feedback
-              placeholder="City"
+              label="City"
               icon="address"
-              value={values.city}
-              error={errors.city}
+              value={city}
               errormsg="Please enter a city name"
               onChange={e => this._onChange(e, 'city')}
-              onBlur={() => {
-                this._validate(checkCity(values.city), 'city');
-              }}
+              validation={checkCity}
             />
             <Input
               testID="userProfileStreet"
-              feedback
-              placeholder="Street Address"
+              label="Street Address"
               icon="address"
-              value={values.street_address}
-              error={errors.street_address}
+              value={street_address}
               errormsg="Please enter a street address name"
               onChange={e => this._onChange(e, 'street_address')}
             />
             <List
               testID="userProfilePets"
               label="Pets"
+              empty={this._renderEmptyPet}
               add={() => this.props.navigation.navigate('PetProfile')}
               items={this.props.pets}
               card={(pet, idx) => (
@@ -124,11 +111,7 @@ export class UserProfileScreen extends Component {
             />
           </Section>
           <Button
-            disabled={
-              checkCity(values.city) ||
-              checkName(values.name) ||
-              checkEmail(values.email)
-            }
+            disabled={checkCity(city) || checkName(name) || checkEmail(email)}
             testID="userProfileSaveBtn"
             label="Save"
             onPress={this._saveAsync}
@@ -153,6 +136,21 @@ export class UserProfileScreen extends Component {
   };
   _onChange = (value, name) => {
     this.setState({values: {...this.state.values, [name]: value}});
+  };
+  _renderEmptyPet = () => {
+    return (
+      <Row
+        style={{
+          padding: 25,
+          justifyContent: 'center',
+          backgroundColor: colors.subText,
+        }}>
+        <View style={{alignItems: 'center'}}>
+          <Icon type="FontAwesome5" name="leaf" size={42} />
+          <StyledText style={{color: colors.white}}>Add a Pet</StyledText>
+        </View>
+      </Row>
+    );
   };
   _saveAsync = () => {};
 }

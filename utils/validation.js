@@ -1,7 +1,5 @@
-export const isBlank = e => e.length === 0;
-const checkLength = (value, min) => {
-  return value.length < min;
-};
+export const isBlank = e => (e ? e.length === 0 : null);
+const checkLength = (value, min) => (value ? value.length < min : null);
 
 export const checkName = e => checkLength(e, 2);
 export const checkEmail = e =>

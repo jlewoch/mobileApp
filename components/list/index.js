@@ -5,14 +5,16 @@ import StyledText from '../styledText';
 import Row from '../row';
 import Icon from '../icon';
 
-const List = ({label, items, card, add}) => {
+const List = ({label, items, card, add, empty}) => {
   return (
     <View testID="listComponentWrapper">
       <Row style={{justifyContent: 'space-between', marginVertical: 15}}>
         <StyledText testID="listLabel">{label}</StyledText>
         {add && <Icon onPress={add} testID="listAddBtn" name="pluscircleo" />}
       </Row>
-      <View testID="listComponent">{items && card && items.map(card)}</View>
+      <View testID="listComponent">
+        {items ? card && items.map(card) : empty && empty()}
+      </View>
     </View>
   );
 };

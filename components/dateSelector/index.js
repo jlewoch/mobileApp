@@ -18,6 +18,7 @@ export default class DateSelector extends Component {
 
   render() {
     const {selectedDate, previousTitle, nextTitle} = this.state;
+
     const {availableDates, disabledDates} = this.props;
     const minDate = moment(); // Today
     const maxDate = moment().add(1, 'years'); // max 1 year
@@ -33,7 +34,11 @@ export default class DateSelector extends Component {
           previousTitle={previousTitle}
           nextTitle={nextTitle}
           todayTextStyle={{
-            color: colors.white,
+            color:
+              selectedDate &&
+              moment(selectedDate).format('L') === minDate.format('L')
+                ? colors.accentOrange
+                : colors.white,
             fontWeight: 'bold',
           }}
           todayBackgroundColor={colors.accentOrange}
@@ -43,6 +48,7 @@ export default class DateSelector extends Component {
             backgroundColor: colors.white,
             borderStyle: 'solid',
             borderColor:
+              selectedDate &&
               moment(selectedDate).format('L') === minDate.format('L')
                 ? colors.accentOrange
                 : colors.main,
@@ -71,8 +77,9 @@ export default class DateSelector extends Component {
   // handles any date selections
   _onDateChange = (date, type) => {
     this.setState({
-      selectedDate: date.format('L'),
+      selectedDate: date.format(),
     });
+    this.props.onDateChange && this.props.onDateChange(date.format());
   };
 }
 
@@ -93,7 +100,6 @@ DateSelector.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#FFFFFF',
   },
 });

@@ -14,13 +14,15 @@ export class Input extends Component {
   _animatedLabelSize = new Animated.Value(18);
   state = {
     secure: false,
-    error: false,
+    error: null,
     focused: false,
   };
   componentDidMount() {
+    const {secure, value} = this.props;
     // if secure is passed as true this will make sure that the field maks value
-    this.props.secure && this.setState({secure: this.props.secure});
-    if (this.props.value.length > 0) {
+    secure && this.setState({secure: secure});
+
+    if (value && value.length > 0) {
       this._animateLabelUp();
     }
   }
@@ -179,7 +181,7 @@ const styles = StyleSheet.create({
   inputFocused: {
     borderBottomColor: colors.main,
   },
-  inputLabel: {position: 'absolute', left: 10},
+  inputLabel: {position: 'absolute', left: 10, color: colors.subText},
   inputLabelWithIcon: {left: 37},
   inputLabelFocused: {color: colors.main},
   validationIcon: {marginHorizontal: 10},
