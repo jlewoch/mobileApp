@@ -1,6 +1,6 @@
-import React, {Component, createRef} from 'react';
+import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 import colors from '../../constants/colors';
@@ -17,9 +17,9 @@ export default class DateSelector extends Component {
   }
 
   render() {
-    const {selectedDate, previousTitle, nextTitle} = this.state;
+    const { selectedDate, previousTitle, nextTitle } = this.state;
 
-    const {availableDates, disabledDates} = this.props;
+    const { availableDates, disabledDates } = this.props;
     const minDate = moment(); // Today
     const maxDate = moment().add(1, 'years'); // max 1 year
 
@@ -36,7 +36,7 @@ export default class DateSelector extends Component {
           todayTextStyle={{
             color:
               selectedDate &&
-              moment(selectedDate).format('L') === minDate.format('L')
+                moment(selectedDate).format('L') === minDate.format('L')
                 ? colors.accentOrange
                 : colors.white,
             fontWeight: 'bold',
@@ -49,7 +49,7 @@ export default class DateSelector extends Component {
             borderStyle: 'solid',
             borderColor:
               selectedDate &&
-              moment(selectedDate).format('L') === minDate.format('L')
+                moment(selectedDate).format('L') === minDate.format('L')
                 ? colors.accentOrange
                 : colors.main,
             borderWidth: 1,
@@ -66,7 +66,7 @@ export default class DateSelector extends Component {
   _onMonthChange = instance => {
     //   does not allow user to navigate to any months that are before the current month
     if (instance.isBefore(moment().startOf('month')))
-      return this.calendar.current.setState({currentMonth: moment().month()});
+      return this.calendar.current.setState({ currentMonth: moment().month() });
 
     //   otherwise update next and previous labels
     this.setState({
@@ -103,30 +103,3 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 });
-//   function for backend to send dates
-//   _arangeDates = dates => {
-//     let today = moment();
-//     // subtract one so it includes today in the while loop
-//     let day = today.clone().subtract(1, 'days');
-//     // available dates and will be selectable
-//     const customDatesStyles = [];
-//     // dates that are not available
-//     const disabledDates = [];
-//     while (day.add(1, 'day').isSame(today, 'month')) {
-//       // check if dates Object has the key of curent day being checked
-//       if (dates[day.format('L')]) {
-//         customDatesStyles.push({
-//           date: day.clone(),
-//           style: {
-//             backgroundColor: colors.main,
-//           },
-//           textStyle: {color: colors.white, fontWeight: 'bold'},
-//         });
-//       } else {
-//         //   disable if it is not in the passed available object
-//         disabledDates.push(day.clone());
-//       }
-//     }
-//     // set state with new values to pass to the calendar
-//     this.setState({customDatesStyles, disabledDates});
-//   };
