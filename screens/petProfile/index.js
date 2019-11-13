@@ -1,8 +1,9 @@
+// dependensies
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 // components
-import {KeyboardAvoidingView, ScrollView} from 'react-native';
+import {ScrollView} from 'react-native';
 import Row from '../../components/row';
 import {StyledImage} from '../../components/styledImage';
 import Section from '../../components/section';
@@ -11,12 +12,9 @@ import Input from '../../components/input';
 import Icon from '../../components/icon';
 import Button from '../../components/button';
 import Dropdown from '../../components/dropdown';
-import {
-  headerHeight,
-  deviceWidth,
-  deviceHeight,
-} from '../../constants/dimensions';
+import {deviceWidth, deviceHeight} from '../../constants/dimensions';
 import SelectableOption from '../../components/selectableOption';
+import ContainerSafeView from '../../components/container';
 /*  
   for furture
   auto guess breed
@@ -97,14 +95,12 @@ export class PetProfileScreen extends Component {
       vet_info,
       nutered_spayed,
     } = this.state;
+
     return (
-      <KeyboardAvoidingView
-        testID="petProfileScreen"
-        behavior="padding"
-        enabled>
+      <ContainerSafeView testID="petProfileScreen">
         <ScrollView
           keyboardShouldPersistTaps="always"
-          style={{backgroundColor: 'gray'}}>
+          style={{backgroundColor: 'gray', flex: 1}}>
           <StyledImage
             testID="petProfileImage"
             uri={img}
@@ -280,10 +276,11 @@ export class PetProfileScreen extends Component {
             onPress={() => this._submit(this.newPet)}
           />
         </ScrollView>
-      </KeyboardAvoidingView>
+      </ContainerSafeView>
     );
   }
   _selectImageAsync = uri => {
+    console.log(uri);
     if (uri) {
       this._handleOnChange(uri, 'img');
     }
@@ -316,7 +313,4 @@ const mapStateToProps = state => ({});
 
 const mapDispatchToProps = {};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(PetProfileScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(PetProfileScreen);

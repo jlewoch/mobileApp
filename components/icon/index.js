@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import colors from '../../constants/colors';
 
@@ -23,7 +24,18 @@ const Icon = ({name, type, size, color, style, onPress}) => {
         return (
           <FontAwesome5
             onPress={onPress}
-            testID="entypoComponent"
+            testID="fontAwesome5Component"
+            name={name}
+            size={size}
+            color={color}
+            style={style}
+          />
+        );
+      case 'FontAwesome':
+        return (
+          <FontAwesome
+            onPress={onPress}
+            testID="fontAwesomeComponent"
             name={name}
             size={size}
             color={color}

@@ -15,7 +15,7 @@ const ImageUpload = ({onPress}) => {
           return onPress(uri);
         } catch (error) {
           console.log(error);
-          return false;
+          return onPress(false);
         }
       }}
       style={styles.uploadBtn}

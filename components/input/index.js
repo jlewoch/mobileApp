@@ -10,6 +10,7 @@ import globalStyles from '../../globalStyles';
 import colors from '../../constants/colors';
 
 export class Input extends Component {
+  initial = false;
   _animatedLabelPosition = new Animated.Value(12);
   _animatedLabelSize = new Animated.Value(18);
   state = {
@@ -25,6 +26,13 @@ export class Input extends Component {
     if (value && value.length > 0) {
       this._animateLabelUp();
     }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (!this.initial && this.props.value && this.props.value.length > 0) {
+      this.initial = true;
+      this._animateLabelUp();
+    }
+    return true;
   }
 
   render() {
@@ -119,11 +127,11 @@ export class Input extends Component {
     // moves and changes size of label when the input is focused or the value is not blank
     Animated.parallel([
       Animated.timing(this._animatedLabelPosition, {
-        toValue: -12,
+        toValue: -10,
         duration: 200,
       }),
       Animated.timing(this._animatedLabelSize, {
-        toValue: 16,
+        toValue: 15,
         duration: 200,
       }),
     ]).start();

@@ -8,7 +8,6 @@ import {IMAGE_URI_ROOT} from '../../constants/api';
 import ImageUpload from '../imgUplaodBtn';
 
 export const StyledImage = ({uri, authorization, onPress, circle, style}) => {
-  console.log(style.width, style.height);
   return (
     <View
       testID="imgWrapper"

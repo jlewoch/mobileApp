@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {View, Text} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import StyledText from '../../components/styledText';
 
-export class index extends Component {
+export class AdminAccessRequestDetailsScreen extends Component {
   state = {};
 
   render() {
@@ -39,4 +38,4 @@ const mapDispatchToProps = {};
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(index);
+)(AdminAccessRequestDetailsScreen);

@@ -2,44 +2,48 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 // components
+import {ScrollView} from 'react-native';
 import Card from '../../components/card';
 import List from '../../components/list';
 import Section from '../../components/section';
-import {ScrollView} from 'react-native-gesture-handler';
+import ContainerSafeView from '../../components/container';
+import Icon from '../../components/icon';
 
 export class HomeScreen extends Component {
-  static navigationOptions = {
-    title: 'hello',
-  };
+  static navigationOptions = props => ({
+    title: 'Dashboard',
+  });
   render() {
     const {events} = this.props;
     return (
-      <ScrollView testID="homeComponent">
-        <Section>
-          <List
-            testID="homeEventList"
-            label="Events"
-            add={() => this.props.navigation.navigate('EventDetails')}
-            items={events}
-            card={(event, idx) => (
-              <Card
-                testID="homeCard"
-                key={idx}
-                image
-                title={event.date}
-                desc={event.type}
-                imageSrc={event.imageSrc}
-                details={event.time || 'N/A'}
-                onPress={() =>
-                  this.props.navigation.navigate('EventSummary', {
-                    event,
-                  })
-                }
-              />
-            )}
-          />
-        </Section>
-      </ScrollView>
+      <ContainerSafeView>
+        <ScrollView testID="homeComponent">
+          <Section>
+            <List
+              testID="homeEventList"
+              label="Events"
+              add={() => this.props.navigation.navigate('Request')}
+              items={events}
+              card={(event, idx) => (
+                <Card
+                  testID="homeCard"
+                  key={idx}
+                  image
+                  title={event.date}
+                  desc={event.type}
+                  imageSrc={event.imageSrc}
+                  details={event.time || 'N/A'}
+                  onPress={() =>
+                    this.props.navigation.navigate('EventSummary', {
+                      event,
+                    })
+                  }
+                />
+              )}
+            />
+          </Section>
+        </ScrollView>
+      </ContainerSafeView>
     );
   }
 }
@@ -141,7 +145,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(HomeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

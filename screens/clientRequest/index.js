@@ -9,11 +9,30 @@ import Dropdown from '../../components/dropdown';
 import Button from '../../components/button';
 
 export class RequestScreen extends Component {
+  static navigationOptions = ({navigation}) => ({
+    title: 'Event Request',
+    headerLeft: () => (
+      <Icon
+        name="arrowleft"
+        color="white"
+        onPress={() => navigation.navigate('Dashboard')}
+        style={{marginLeft: 15}}
+      />
+    ),
+  });
   modify = false;
-  state = {date: '', type: 'Walk', start_time: '', pets: [], notes: ''};
+  state = {
+    date: '',
+    type: '30 Minute walk',
+    start_time: '',
+    pets: [],
+    notes: '',
+  };
+
   render() {
     const {type, start_time, pets, notes} = this.state;
-    console.log(this.state.date);
+    // type dropdown options
+    const typeOptions = [{label: '30 Minute walk', value: '30 Minute walk'}];
     return (
       <ScrollView
         contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
@@ -24,7 +43,7 @@ export class RequestScreen extends Component {
           />
           <Dropdown
             testID="requestTypeDropdown"
-            options={[{label: '30 Minute walk', value: '30 Minute walk'}]}
+            options={typeOptions}
             onChange={e => this._handleOnChange(e, 'type')}
             selected={type}
           />

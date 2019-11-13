@@ -1,31 +1,39 @@
+// dependencies
 import React, {Component} from 'react';
-import {KeyboardAvoidingView, ScrollView, View} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {checkName, checkCity, checkEmail} from '../../utils/validation';
+import {deviceWidth, deviceHeight} from '../../constants/dimensions';
+// components
 import Section from '../../components/section';
 import Card from '../../components/card';
 import Button from '../../components/button';
 import Input from '../../components/input';
 import List from '../../components/list';
-import {StyledImage} from '../../components/styledImage';
-import {checkName, checkCity, checkEmail} from '../../utils/validation';
-import {getPhotoAsync} from '../../utils/permissions';
-import {
-  headerHeight,
-  deviceWidth,
-  deviceHeight,
-} from '../../constants/dimensions';
+import StyledImage from '../../components/styledImage';
 import Icon from '../../components/icon';
-import colors from '../../constants/colors';
-import Row from '../../components/row';
-import StyledText from '../../components/styledText';
+import {ScrollView} from 'react-native-gesture-handler';
+import Empty from '../../components/list/Empty';
+import ContainerSafeView from '../../components/container';
+
 export class UserProfileScreen extends Component {
+  static navigationOptions = ({navigation}) => ({
+    title: 'Profile',
+    headerLeft: () => (
+      <Icon
+        name="arrowleft"
+        color="white"
+        onPress={() => navigation.navigate('Home')}
+        style={{marginLeft: 15}}
+      />
+    ),
+  });
   state = {
     image: null,
-    name: null,
-    email: null,
-    city: null,
-    street_address: null,
+    name: '',
+    email: '',
+    city: '',
+    street_address: '',
   };
   componentDidMount() {
     if (this.props.user) {
@@ -36,16 +44,10 @@ export class UserProfileScreen extends Component {
 
   render() {
     const {image, name, email, city, street_address} = this.state;
+    console.log(image);
     return (
-      <KeyboardAvoidingView
-        style={{flex: 1, backgroundColor: 'white'}}
-        behavior="padding"
-        enabled
-        keyboardVerticalOffset={headerHeight}>
-        <ScrollView
-          testID="userProfileScreen"
-          style={{flex: 1}}
-          contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
+      <ContainerSafeView testID="userProfileScreen" style={{flex: 1}}>
+        <ScrollView style={{flex: 1}} keyboardShouldPersistTaps="always">
           <StyledImage
             testID="userProfileImage"
             style={{width: deviceWidth, height: deviceHeight / 3}}
@@ -93,9 +95,16 @@ export class UserProfileScreen extends Component {
             <List
               testID="userProfilePets"
               label="Pets"
-              empty={this._renderEmptyPet}
-              add={() => this.props.navigation.navigate('PetProfile')}
-              items={this.props.pets}
+              empty={() => (
+                <Empty
+                  onPress={this._addPet}
+                  message="Add A Pet"
+                  iconType="FontAwesome5"
+                  iconName="leaf"
+                />
+              )}
+              add={this._addPet}
+              items={this.props.user.pets}
               card={(pet, idx) => (
                 <Card
                   key={idx}
@@ -105,7 +114,8 @@ export class UserProfileScreen extends Component {
                   title={pet.name}
                   desc={pet.breed}
                   details={pet.age}
-                  image={pet.img}
+                  image
+                  imageSrc={pet.img}
                 />
               )}
             />
@@ -117,41 +127,21 @@ export class UserProfileScreen extends Component {
             onPress={this._saveAsync}
           />
         </ScrollView>
-      </KeyboardAvoidingView>
+      </ContainerSafeView>
     );
   }
-  _selectPhotoAsync = async () => {
-    try {
-      const uri = await getPhotoAsync();
-      this._onChange(uri, 'image');
-    } catch (error) {
-      console.log(error);
-    }
+  _addPet = () => {
+    this.props.navigation.navigate('PetProfile');
   };
-  _setPhotoState = response => {
-    this.onChange(response.uri, 'image');
+  _selectPhotoAsync = uri => {
+    if (uri) this._onChange(uri, 'image');
   };
-  _validate = (value, name) => {
-    this.setState({errors: {...this.state.errors, [name]: value}});
+
+  // handles and value chnages for any input
+  _onChange = (value, stateKey) => {
+    this.setState({[stateKey]: value});
   };
-  _onChange = (value, name) => {
-    this.setState({values: {...this.state.values, [name]: value}});
-  };
-  _renderEmptyPet = () => {
-    return (
-      <Row
-        style={{
-          padding: 25,
-          justifyContent: 'center',
-          backgroundColor: colors.subText,
-        }}>
-        <View style={{alignItems: 'center'}}>
-          <Icon type="FontAwesome5" name="leaf" size={42} />
-          <StyledText style={{color: colors.white}}>Add a Pet</StyledText>
-        </View>
-      </Row>
-    );
-  };
+
   _saveAsync = () => {};
 }
 UserProfileScreen.propTypes = {
@@ -186,11 +176,17 @@ UserProfileScreen.propTypes = {
     ),
   }),
 };
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  user: {
+    name: 'jake',
+    email: 'dsad@dass.com',
+    city: 'lkjasdl',
+    image: null,
+    street_address: '',
+    pets: [],
+  },
+});
 
 const mapDispatchToProps = {};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(UserProfileScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfileScreen);

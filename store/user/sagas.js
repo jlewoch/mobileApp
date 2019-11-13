@@ -7,6 +7,7 @@ import {apiCall, PET, REQUEST, PROFILE} from '../../constants/api';
 function* addPet(payload) {
   try {
     const pet = yield call(apiCall, PET, 'POST', payload);
+    yield put(action.addedPet(pet.data));
   } catch (error) {
     console.log(error.message);
   }

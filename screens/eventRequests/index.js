@@ -3,7 +3,7 @@ import {ScrollView} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-export class AdminEventRequests extends Component {
+export class EventRequestsScreen extends Component {
   static propTypes = {};
 
   render() {
@@ -22,4 +22,4 @@ const mapDispatchToProps = {};
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AdminEventRequests);
+)(EventRequestsScreen);

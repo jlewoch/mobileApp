@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import Row from '../row';
 import {StyledImage} from '../styledImage';
 import StyledText from '../styledText';
-import {TouchableHighlight} from 'react-native-gesture-handler';
 import colors from '../../constants/colors';
 
 const Card = ({image, imageSrc, title, desc, details, onPress}) => {
   return (
-    <TouchableHighlight
+    <TouchableOpacity
       onPress={onPress}
       testID="cardComponent"
       style={{
@@ -39,7 +38,7 @@ const Card = ({image, imageSrc, title, desc, details, onPress}) => {
           </StyledText>
         </View>
       </Row>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 Card.prototype = {

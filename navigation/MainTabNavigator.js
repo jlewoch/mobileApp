@@ -1,21 +1,38 @@
+/* 
+  all stack navigation setup and configurations
+*/
+// dependnecies
 import React from 'react';
 import {Platform} from 'react-native';
 import {createStackNavigator} from 'react-navigation-stack';
-import {createDrawerNavigator} from 'react-navigation-drawer';
-
+import {createDrawerNavigator, DrawerActions} from 'react-navigation-drawer';
 import colors from '../constants/colors';
+
 // auth screens
 import LoginScreen from '../screens/login';
 import SignupScreen from '../screens/signup';
 import ForgotPasswordScreen from '../screens/forgot';
+
 // home screens
 import HomeScreen from '../screens/home';
 
 // profile screens
 import UserProfileScreen from '../screens/userProfile';
 import PetProfileScreen from '../screens/petProfile';
-import Icon from '../components/icon';
+import {RequestScreen} from '../screens/clientRequest';
 
+// event screens
+import EventSummaryScreen from '../screens/eventSummary';
+
+// misc
+import Icon from '../components/icon';
+import CustomDrawer from '../components/drawer';
+import {deviceWidth} from '../constants/dimensions';
+import {AdminAccessRequestDetailsScreen} from '../screens/adminAccessRequestDetails';
+import {AdminAccessRequestsScreen} from '../screens/adminAccessRequests';
+import {AdminEventRequestsScreen} from '../screens/adminEventRequests';
+
+// initial global config
 const config = Platform.select({
   web: {headerMode: 'screen'},
   default: {
@@ -39,7 +56,7 @@ const config = Platform.select({
             type="Entypo"
             name="menu"
             color="white"
-            onPress={() => props.navigation.toggleDrawer()}
+            onPress={props.navigation.openDrawer}
             style={{marginRight: 15}}
           />
         ),
@@ -47,7 +64,7 @@ const config = Platform.select({
     },
   },
 });
-
+// authentication stack
 export const AuthStack = createStackNavigator(
   {
     Login: LoginScreen,
@@ -56,42 +73,66 @@ export const AuthStack = createStackNavigator(
   },
   {...config, initialRouteName: 'Login'},
 );
-export const HomeStack = createStackNavigator(
+
+// home stack
+const HomeStack = createStackNavigator(
   {
     Dashboard: HomeScreen,
+    Request: RequestScreen,
   },
   {
     ...config,
     initialRouteName: 'Dashboard',
-    navigationOptions: {
-      drawerIcon: ({focused, tintColor}) => {
-        return <Icon name="user" color={focused ? tintColor : colors.main} />;
-      },
-    },
   },
 );
-export const ProfileStack = createStackNavigator(
+// events stack
+const EventStack = createStackNavigator(
+  {
+    EventSummary: EventSummaryScreen,
+    PetSummary: RequestScreen,
+  },
+  config,
+);
+// profile stack
+const ProfileStack = createStackNavigator(
   {
     UserProfile: UserProfileScreen,
     PetProfile: {screen: PetProfileScreen, path: 'profile/:name'},
   },
-  {
-    ...config,
-    navigationOptions: props => {
-      return {
-        drawerIcon: ({focused, tintColor}) => {
-          return <Icon name="user" color={focused ? tintColor : colors.main} />;
-        },
-      };
-    },
-  },
+  config,
 );
-export default createDrawerNavigator(
-  {Home: HomeStack, Profile: ProfileStack},
+// admin stack
+const AdminStack = createStackNavigator(
+  {
+    AccessRequests: AdminAccessRequestsScreen,
+    AccessRequestDetails: AdminAccessRequestDetailsScreen,
+    EventRequests: AdminEventRequestsScreen,
+  },
+  config,
+);
+// request stack
+
+// declare and configue drawer navigator
+const AppStack = createDrawerNavigator(
+  {
+    Home: HomeStack,
+    Profile: ProfileStack,
+    Event: EventStack,
+    Admin: AdminStack,
+  },
   {
     initialRouteName: 'Home',
-    contentOptions: {
-      activeTintColor: '#e91e63',
-    },
+
+    contentComponent: CustomDrawer,
+    // edgeWidth?: number,
+    drawerPosition: 'left',
+    drawerType: 'slide',
+    drawerLockMode: 'locked-open',
+    // swipeEdgeWidth?: number,
+    drawerWidth: () => (deviceWidth / 4) * 3,
+    hideStatusBar: true,
+    unmountInactiveRoutes: true,
   },
 );
+// stack exports
+module.exports = {AuthStack, AppStack};
