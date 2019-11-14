@@ -46,7 +46,7 @@ export class UserProfileScreen extends Component {
     const {image, name, email, city, street_address} = this.state;
     console.log(image);
     return (
-      <ContainerSafeView testID="userProfileScreen" style={{flex: 1}}>
+      <ContainerSafeView testID="userProfileScreen">
         <ScrollView style={{flex: 1}} keyboardShouldPersistTaps="always">
           <StyledImage
             testID="userProfileImage"

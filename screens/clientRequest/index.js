@@ -7,10 +7,11 @@ import Section from '../../components/section';
 import Input from '../../components/input';
 import Dropdown from '../../components/dropdown';
 import Button from '../../components/button';
+import Icon from '../../components/icon';
 
 export class RequestScreen extends Component {
   static navigationOptions = ({navigation}) => ({
-    title: 'Event Request',
+    title: 'New Event Request',
     headerLeft: () => (
       <Icon
         name="arrowleft"
@@ -67,7 +68,4 @@ const mapStateToProps = state => ({});
 
 const mapDispatchToProps = {};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(RequestScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(RequestScreen);

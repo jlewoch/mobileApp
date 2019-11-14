@@ -2,17 +2,17 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 // components
-import {ScrollView} from 'react-native';
+import {ScrollView, Image} from 'react-native';
 import Card from '../../components/card';
 import List from '../../components/list';
 import Section from '../../components/section';
 import ContainerSafeView from '../../components/container';
-import Icon from '../../components/icon';
 
 export class HomeScreen extends Component {
   static navigationOptions = props => ({
     title: 'Dashboard',
   });
+  state = {source: require('../../assets/images/default-Image.png')};
   render() {
     const {events} = this.props;
     return (
@@ -22,7 +22,7 @@ export class HomeScreen extends Component {
             <List
               testID="homeEventList"
               label="Events"
-              add={() => this.props.navigation.navigate('Request')}
+              add={() => this.props.navigation.navigate('SubmitRequest')}
               items={events}
               card={(event, idx) => (
                 <Card
@@ -31,7 +31,7 @@ export class HomeScreen extends Component {
                   image
                   title={event.date}
                   desc={event.type}
-                  imageSrc={event.imageSrc}
+                  imageSrc={this._getImageSrc(event)}
                   details={event.time || 'N/A'}
                   onPress={() =>
                     this.props.navigation.navigate('EventSummary', {
@@ -46,12 +46,15 @@ export class HomeScreen extends Component {
       </ContainerSafeView>
     );
   }
+  _getImageSrc = ({pets}) => {
+    if (!pets[0] || !pets[0].img) return null;
+    return `${pets[0].owner}/${pets[0].img}`;
+  };
 }
 HomeScreen.propTypes = {
   events: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string,
-      image: PropTypes.string,
       date: PropTypes.string,
       time: PropTypes.string,
       type: PropTypes.string,
@@ -61,6 +64,7 @@ HomeScreen.propTypes = {
           owner: PropTypes.string,
           img: PropTypes.string,
           breed: PropTypes.string,
+          about: PropTypes.string,
           age: PropTypes.number,
           play_child: PropTypes.bool,
           play_dog: PropTypes.bool,
@@ -91,8 +95,8 @@ const mapStateToProps = state => ({
       pets: [
         {
           _id: 'Test',
-          owner: 'Test',
-          img: 'Test',
+          owner: '5dc06f5e12dc1b38e8b98b20',
+          img: '1572915066810.jpg',
           breed: 'Test',
           age: 2,
           play_child: true,
@@ -104,6 +108,7 @@ const mapStateToProps = state => ({
           microchip: true,
           house_trained: true,
           name: 'Test',
+          about: 'Test',
           size: 'Test',
           notes: 'Test',
           medication: 'Test',
@@ -121,7 +126,7 @@ const mapStateToProps = state => ({
         {
           _id: 'Test',
           owner: 'Test',
-          img: 'Test',
+          img: '',
           breed: 'Test',
           age: 2,
           play_child: true,
@@ -132,6 +137,7 @@ const mapStateToProps = state => ({
           around_cat: true,
           microchip: true,
           house_trained: true,
+          about: 'Test',
           name: 'Test',
           size: 'Test',
           notes: 'Test',

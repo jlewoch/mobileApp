@@ -34,7 +34,6 @@ export class AuthLoadingScreen extends Component {
 export default AuthLoadingScreen;
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },

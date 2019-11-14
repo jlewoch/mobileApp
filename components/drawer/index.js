@@ -16,7 +16,7 @@ import Option from './Option';
 const width = (deviceWidth / 4) * 3;
 const CustomDrawer = ({navigation, activeItemKey, isAdmin}) => {
   return (
-    <ContainerSafeView style={styles.container}>
+    <ContainerSafeView>
       <Image
         source={require('../../assets/images/splash.jpg')}
         style={styles.image}
@@ -61,10 +61,6 @@ export default connect(
   mapDispatchToProps,
 )(withNavigation(CustomDrawer));
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-
   activeBackgroundColor: {
     backgroundColor: 'grey',
   },

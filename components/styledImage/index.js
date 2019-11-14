@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 // components
 import {Image, StyleSheet, View} from 'react-native';
 // constants
-import {IMAGE_URI_ROOT} from '../../constants/api';
 import ImageUpload from '../imgUplaodBtn';
+import CustomImage from './CustomImage';
 
 export const StyledImage = ({uri, authorization, onPress, circle, style}) => {
   return (
@@ -13,10 +13,11 @@ export const StyledImage = ({uri, authorization, onPress, circle, style}) => {
       testID="imgWrapper"
       style={{height: style.height, width: style.width, position: 'relative'}}>
       {onPress && <ImageUpload onPress={onPress} />}
-      <Image
-        testID="imgComponent"
-        source={uri ? {uri} : require('../../assets/images/default-Image.png')}
-        style={[circle ? styles.circleImage : styles.image, style]}
+      <CustomImage
+        testID="imgImageComponent"
+        circle={circle}
+        style={style}
+        uri={uri}
       />
     </View>
   );
@@ -33,11 +34,3 @@ const mapStateToProps = ({auth}) => ({
 });
 
 export default connect(mapStateToProps)(StyledImage);
-const styles = StyleSheet.create({
-  container: {position: 'relative'},
-  circleImage: {
-    flex: 1,
-    width: 75,
-    borderRadius: 50,
-  },
-});

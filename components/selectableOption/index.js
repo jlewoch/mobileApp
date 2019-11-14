@@ -3,6 +3,7 @@ import {StyleSheet, TouchableHighlight} from 'react-native';
 import StyledText from '../styledText';
 import colors from '../../constants/colors';
 import Icon from '../icon';
+import {StyledImage} from '../styledImage';
 
 const SelectableOption = ({
   label,
@@ -11,7 +12,32 @@ const SelectableOption = ({
   iconType,
   onChange,
   selected,
+  uri,
 }) => {
+  const selectbody = type => {
+    switch (type) {
+      case 'icon':
+        return (
+          <Icon
+            name={iconName}
+            type={iconType}
+            color={selected ? colors.main : colors.subText}
+          />
+        );
+      case 'image':
+        <StyledImage uri={uri} circle />;
+      default:
+        return (
+          <StyledText
+            style={[
+              styles.text,
+              selected ? styles.selectedText : styles.deSelectedText,
+            ]}>
+            {label}
+          </StyledText>
+        );
+    }
+  };
   return (
     <TouchableHighlight
       underlayColor="#fff"
@@ -20,21 +46,7 @@ const SelectableOption = ({
         selected ? styles.selectedWrapper : styles.deSelectedWrapper,
       ]}
       onPress={() => onChange(!selected)}>
-      {type === 'icon' && iconName ? (
-        <Icon
-          name={iconName}
-          type={iconType}
-          color={selected ? colors.main : colors.subText}
-        />
-      ) : (
-        <StyledText
-          style={[
-            styles.text,
-            selected ? styles.selectedText : styles.deSelectedText,
-          ]}>
-          {label}
-        </StyledText>
-      )}
+      {selectbody(type)}
     </TouchableHighlight>
   );
 };

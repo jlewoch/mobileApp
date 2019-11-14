@@ -8,6 +8,11 @@ import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator, DrawerActions} from 'react-navigation-drawer';
 import colors from '../constants/colors';
 
+// misc
+import Icon from '../components/icon';
+import CustomDrawer from '../components/drawer';
+import {deviceWidth} from '../constants/dimensions';
+
 // auth screens
 import LoginScreen from '../screens/login';
 import SignupScreen from '../screens/signup';
@@ -19,18 +24,18 @@ import HomeScreen from '../screens/home';
 // profile screens
 import UserProfileScreen from '../screens/userProfile';
 import PetProfileScreen from '../screens/petProfile';
-import {RequestScreen} from '../screens/clientRequest';
+import RequestScreen from '../screens/clientRequest';
+
+// requests screens
+import EventRequestsScreen from '../screens/eventRequests';
+import PetSummaryScreen from '../screens/petSummaryScreen';
 
 // event screens
 import EventSummaryScreen from '../screens/eventSummary';
 
-// misc
-import Icon from '../components/icon';
-import CustomDrawer from '../components/drawer';
-import {deviceWidth} from '../constants/dimensions';
-import {AdminAccessRequestDetailsScreen} from '../screens/adminAccessRequestDetails';
-import {AdminAccessRequestsScreen} from '../screens/adminAccessRequests';
-import {AdminEventRequestsScreen} from '../screens/adminEventRequests';
+// admin screens
+import AdminAccessRequestDetailsScreen from '../screens/adminAccessRequestDetails';
+import AdminAccessRequestsScreen from '../screens/adminAccessRequests';
 
 // initial global config
 const config = Platform.select({
@@ -51,6 +56,7 @@ const config = Platform.select({
         headerTitleStyle: {
           fontWeight: 'bold',
         },
+        // put drawer icon on every page
         headerRight: () => (
           <Icon
             type="Entypo"
@@ -78,18 +84,28 @@ export const AuthStack = createStackNavigator(
 const HomeStack = createStackNavigator(
   {
     Dashboard: HomeScreen,
-    Request: RequestScreen,
   },
   {
     ...config,
     initialRouteName: 'Dashboard',
   },
 );
+// home stack
+const RequestStack = createStackNavigator(
+  {
+    RequestList: EventRequestsScreen,
+    SubmitRequest: RequestScreen,
+  },
+  {
+    ...config,
+    initialRouteName: 'RequestList',
+  },
+);
 // events stack
 const EventStack = createStackNavigator(
   {
     EventSummary: EventSummaryScreen,
-    PetSummary: RequestScreen,
+    PetSummary: PetSummaryScreen,
   },
   config,
 );
@@ -97,7 +113,7 @@ const EventStack = createStackNavigator(
 const ProfileStack = createStackNavigator(
   {
     UserProfile: UserProfileScreen,
-    PetProfile: {screen: PetProfileScreen, path: 'profile/:name'},
+    PetProfile: PetProfileScreen,
   },
   config,
 );
@@ -106,7 +122,6 @@ const AdminStack = createStackNavigator(
   {
     AccessRequests: AdminAccessRequestsScreen,
     AccessRequestDetails: AdminAccessRequestDetailsScreen,
-    EventRequests: AdminEventRequestsScreen,
   },
   config,
 );
@@ -118,6 +133,7 @@ const AppStack = createDrawerNavigator(
     Home: HomeStack,
     Profile: ProfileStack,
     Event: EventStack,
+    Request: RequestStack,
     Admin: AdminStack,
   },
   {

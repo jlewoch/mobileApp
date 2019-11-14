@@ -10,6 +10,7 @@ import StyledText from '../../components/styledText';
 import Row from '../../components/row';
 import {checkEmail, checkPassword} from '../../utils/validation';
 import colors from '../../constants/colors';
+import ContainerSafeView from '../../components/container';
 
 export class LoginScreen extends Component {
   static navigationOptions = {
@@ -22,56 +23,58 @@ export class LoginScreen extends Component {
   render() {
     const {values, errors} = this.state;
     return (
-      <Section testID="loginComponent">
-        <Input
-          testID="loginEmailInput"
-          label="Email"
-          autoFocus
-          icon="mail"
-          value={email}
-          errormsg="Please enter a valid email address"
-          onChange={e => this._handleOnChange(e, 'email')}
-          validation={checkEmail}
-        />
-        <Input
-          testID="loginPasswordInput"
-          label="Password"
-          icon="lock"
-          value={password}
-          secure
-          onChange={e => this._handleOnChange(e, 'password')}
-        />
-        <StyledText
-          testID="loginForgot"
-          type="footnote"
-          onPress={() => this.props.navigation.navigate('ForgotPassword')}
-          style={{
-            color: colors.main,
-            fontWeight: '600',
-          }}>
-          Forgot Password
-        </StyledText>
-        <Button
-          testID="loginBtn"
-          disabled={checkEmail(email) || checkPassword(password)}
-          label="Login"
-          onPress={this._signInAsync}
-        />
-        <Row style={{justifyContent: 'center'}}>
-          <StyledText type="footnote">Don't have an Account?</StyledText>
-
+      <ContainerSafeView>
+        <Section testID="loginComponent">
+          <Input
+            testID="loginEmailInput"
+            label="Email"
+            autoFocus
+            icon="mail"
+            value={email}
+            errormsg="Please enter a valid email address"
+            onChange={e => this._handleOnChange(e, 'email')}
+            validation={checkEmail}
+          />
+          <Input
+            testID="loginPasswordInput"
+            label="Password"
+            icon="lock"
+            value={password}
+            secure
+            onChange={e => this._handleOnChange(e, 'password')}
+          />
           <StyledText
-            onPress={this._signInAsync}
-            testID="loginSignup"
+            testID="loginForgot"
             type="footnote"
+            onPress={() => this.props.navigation.navigate('ForgotPassword')}
             style={{
               color: colors.main,
               fontWeight: '600',
             }}>
-            {' Sign Up'}
+            Forgot Password
           </StyledText>
-        </Row>
-      </Section>
+          <Button
+            testID="loginBtn"
+            disabled={checkEmail(email) || checkPassword(password)}
+            label="Login"
+            onPress={this._signInAsync}
+          />
+          <Row style={{justifyContent: 'center'}}>
+            <StyledText type="footnote">Don't have an Account?</StyledText>
+
+            <StyledText
+              onPress={this._signInAsync}
+              testID="loginSignup"
+              type="footnote"
+              style={{
+                color: colors.main,
+                fontWeight: '600',
+              }}>
+              {' Sign Up'}
+            </StyledText>
+          </Row>
+        </Section>
+      </ContainerSafeView>
     );
   }
 
@@ -84,8 +87,5 @@ LoginScreen.propTypes = {};
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = (dispatch, ownprops) => ({});
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LoginScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
 const styles = StyleSheet.create({});
